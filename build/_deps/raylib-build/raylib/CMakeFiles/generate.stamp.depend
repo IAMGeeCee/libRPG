@@ -1,0 +1,19 @@
+# CMake generation dependency list for this directory.
+C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CPack.cmake
+C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CPackComponent.cmake
+C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/FindOpenGL.cmake
+C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/FindPackageMessage.cmake
+C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/GNUInstallDirs.cmake
+C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Templates/CPackConfig.cmake.in
+C:/Users/George/Code/libRPG/build/_deps/raylib-src/cmake/CompileDefinitions.cmake
+C:/Users/George/Code/libRPG/build/_deps/raylib-src/cmake/GlfwImport.cmake
+C:/Users/George/Code/libRPG/build/_deps/raylib-src/cmake/InstallConfigurations.cmake
+C:/Users/George/Code/libRPG/build/_deps/raylib-src/cmake/JoinPaths.cmake
+C:/Users/George/Code/libRPG/build/_deps/raylib-src/cmake/LibraryConfigurations.cmake
+C:/Users/George/Code/libRPG/build/_deps/raylib-src/cmake/LibraryPathToLinkerFlags.cmake
+C:/Users/George/Code/libRPG/build/_deps/raylib-src/cmake/PackConfigurations.cmake
+C:/Users/George/Code/libRPG/build/_deps/raylib-src/cmake/PopulateConfigVariablesLocally.cmake
+C:/Users/George/Code/libRPG/build/_deps/raylib-src/cmake/raylib-config-version.cmake
+C:/Users/George/Code/libRPG/build/_deps/raylib-src/raylib.pc.in
+C:/Users/George/Code/libRPG/build/_deps/raylib-src/src/CMakeLists.txt
