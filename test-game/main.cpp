@@ -7,7 +7,7 @@ int MainLoop()
 {
 	BeginDrawing();
 
-	DrawFPS(100,1000);
+	DrawFPS(50,50);
 
 	EndDrawing();
 

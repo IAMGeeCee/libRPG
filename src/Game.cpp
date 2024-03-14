@@ -13,20 +13,8 @@ Game::Game(std::function<int()> mainLoop){
 		
 	
 	while(!WindowShouldClose())
-	{
-		//Main loop
-		BeginDrawing();
+	{	
 		ClearBackground(BLACK);
-
-		DrawFPS(50,50);
-
-		EndDrawing();
-
-
-
-		//TODO: Engine users game logic here
-		//Maybe somehow pass it in the Game class as a function that i can run here.
-
 		int mainLoopReturn = mainLoop();
 	}
 
