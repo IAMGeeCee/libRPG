@@ -2,14 +2,19 @@
 #include <raylib.h>
 #include <iostream>
 #include <functional>
+#include <raymath.h>
 
 using namespace std;
 
-Game::Game(std::function<int()> mainLoop){
-	//Set up other aspects such as player and map
+Game::Game(){
+	//Set up game
 	Game::player = Player();
+}
 
+Game::~Game(){}
 
+void Game::StartGame(std::function<int()> mainLoop)
+{
 	//Set up window
 	InitWindow(GetScreenHeight(), GetScreenWidth(), "test game");
 	SetConfigFlags(FLAG_VSYNC_HINT);
@@ -20,10 +25,11 @@ Game::Game(std::function<int()> mainLoop){
 	while(!WindowShouldClose())
 	{	
 		ClearBackground(BLACK);
+
 		int mainLoopReturn = mainLoop();
 	}
 
 	CloseWindow();
-}
 
-Game::~Game(){}
+
+}

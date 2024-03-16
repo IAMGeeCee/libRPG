@@ -15,7 +15,7 @@ set(BUILD_EXAMPLES OFF CACHE INTERNAL "")
 FetchContent_MakeAvailable(raylib)
 
 # Define your library
-add_library(libRPG STATIC "src/Game.cpp")
+add_library(libRPG STATIC "src/Game.cpp" "src/Player.cpp")
 
 # Include paths for the library
 target_include_directories(libRPG PUBLIC src)

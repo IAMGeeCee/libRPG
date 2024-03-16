@@ -4,6 +4,9 @@
     <ClCompile Include="C:\Users\George\Code\libRPG\src\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\src\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\George\Code\libRPG\CMakeLists.txt" />

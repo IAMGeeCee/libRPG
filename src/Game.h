@@ -7,8 +7,9 @@ using namespace std;
 
 class Game {
 public:
-	Game(std::function<int()> mainLoop);
+	Game();
 	~Game();
+	void StartGame(std::function<int()> mainLoop);
 	Player player;
 
 private:

@@ -7,9 +7,10 @@ using namespace std;
 
 void Player::DetectInput()
 {
+
 }
 
-void Player::DrawPlayer(Texture2D SpriteSheet, Rectangle sourceRect, Rectangle destRect)
+void Player::DrawPlayer(Rectangle sourceRect, Rectangle destRect)
 {
-	DrawTexturePro(SpriteSheet, sourceRect, destRect, {0, 0}, 0.0f, WHITE);
+	DrawTexturePro(Player::SpriteSheet, sourceRect, destRect, {0, 0}, 0.0f, WHITE);
 }

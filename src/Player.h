@@ -1,4 +1,5 @@
 #include <raylib.h>
+#include <raymath.h>
 #include <list>
 
 using namespace std;
@@ -6,8 +7,9 @@ using namespace std;
 class Player {
 public:
 	void DetectInput();
-	void DrawPlayer(Texture2D SpriteSheet, Rectangle sourceRect, Rectangle destRect);
-	Vector2 position;
+	void DrawPlayer(Rectangle sourceRect, Rectangle destRect);
+	Vector2 position = {0,0};
 	Vector2 size;
 	Color color;
+	Texture2D SpriteSheet;
 };
