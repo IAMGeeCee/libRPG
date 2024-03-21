@@ -5,6 +5,11 @@
 
 using namespace std;
 
+void Player::ChangeKeybind()
+{
+
+}
+
 void Player::DetectInput()
 {
 
