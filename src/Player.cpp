@@ -12,7 +12,22 @@ void Player::ChangeKeybind()
 
 void Player::DetectInput()
 {
-	if(IsKeyDown(KEY_W)){}
+	if(IsKeyDown(Player::forwardKey))
+	{
+		Player::position.y = Player::position.y - Player::walkingSpeed;
+	}
+	if(IsKeyDown(Player::leftKey))
+	{
+		Player::position.x = Player::position.x - Player::walkingSpeed;
+	}
+	if(IsKeyDown(Player::backwardKey))
+	{
+		Player::position.y = Player::position.y + Player::walkingSpeed;
+	}
+	if(IsKeyDown(Player::rightKey))
+	{
+		Player::position.x = Player::position.x + Player::walkingSpeed;
+	}
 }
 
 void Player::DrawPlayer()

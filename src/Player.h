@@ -18,4 +18,10 @@ public:
 	int walkingSpeed;
 	int sprintSpeed;
 	bool canSprint;
+
+	KeyboardKey forwardKey = KEY_W;
+	KeyboardKey backwardKey = KEY_S;
+	KeyboardKey leftKey = KEY_A;
+	KeyboardKey rightKey = KEY_D;
+	KeyboardKey sprintKey = KEY_Q;
 };
