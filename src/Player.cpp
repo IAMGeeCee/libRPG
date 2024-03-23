@@ -12,10 +12,10 @@ void Player::ChangeKeybind()
 
 void Player::DetectInput()
 {
-
+	if(IsKeyDown(KEY_W)){}
 }
 
-void Player::DrawPlayer(Rectangle destRect)
+void Player::DrawPlayer()
 {	
 	int spriteSheetWidth = Player::SpriteSheet.width;
 	int spriteSheetHeight = Player::SpriteSheet.height;
@@ -28,5 +28,11 @@ void Player::DrawPlayer(Rectangle destRect)
 		sourceRect.y = 0;
 		sourceRect.width = spriteSheetColoumnSize;
 		sourceRect.height = spriteSheetRowSize;
+	Rectangle destRect;
+		destRect.x = Player::position.x;
+		destRect.y = Player::position.y;
+		destRect.width = Player::size.x;
+		destRect.height = Player::size.y;
+
 	DrawTexturePro(Player::SpriteSheet, sourceRect, destRect, {0, 0}, 0.0f, WHITE);
 }

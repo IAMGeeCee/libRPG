@@ -7,7 +7,7 @@ using namespace std;
 class Player {
 public:
 	void DetectInput();
-	void DrawPlayer(Rectangle sourceRect);
+	void DrawPlayer();
 	void ChangeKeybind();
 	Vector2 position = {0,0};
 	Vector2 size;
