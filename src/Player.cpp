@@ -15,19 +15,19 @@ void Player::DetectInput()
 
 	if(IsKeyDown(Player::forwardKey))
 	{
-		Player::position.y = Player::position.y - Player::walkingSpeed;
+		Player::position.y = Player::position.y - currentSpeed;
 	}
 	if(IsKeyDown(Player::leftKey))
 	{
-		Player::position.x = Player::position.x - Player::walkingSpeed;
+		Player::position.x = Player::position.x - currentSpeed;
 	}
 	if(IsKeyDown(Player::backwardKey))
 	{
-		Player::position.y = Player::position.y + Player::walkingSpeed;
+		Player::position.y = Player::position.y + currentSpeed;
 	}
 	if(IsKeyDown(Player::rightKey))
 	{
-		Player::position.x = Player::position.x + Player::walkingSpeed;
+		Player::position.x = Player::position.x + currentSpeed;
 	}
 }
 
