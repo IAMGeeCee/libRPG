@@ -29,10 +29,12 @@ void Game::StartGame(std::function<int()> mainLoop)
 	
 	while(!WindowShouldClose())//Main loop (repeats 1 time each frame i think)
 	{	
-		ClearBackground(BLACK);//Reload window so content is not drawn on top of existing content
+    BeginDrawing();
+		ClearBackground(RAYWHITE);//Reload window so content is not drawn on top of existing content
 		
 		//End user defined logic runs
 		int mainLoopReturn = mainLoop();
+    EndDrawing();
 	}
 	
 	//Game ended

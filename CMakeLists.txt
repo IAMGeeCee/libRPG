@@ -14,6 +14,9 @@ FetchContent_Declare(
 set(BUILD_EXAMPLES OFF CACHE INTERNAL "")
 FetchContent_MakeAvailable(raylib)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "") 
+
 # Define your library
 add_library(libRPG STATIC "src/Game.cpp" "src/Player.cpp")
 
@@ -30,3 +33,4 @@ add_executable(test-game
 
 # Link your application with your library
 target_link_libraries(test-game PRIVATE libRPG)
+

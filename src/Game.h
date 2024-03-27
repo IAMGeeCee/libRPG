@@ -11,7 +11,7 @@ public:
 	~Game();
 	void StartGame(std::function<int()> mainLoop);
 	Player player;
-
+  
 private:
 	
 };

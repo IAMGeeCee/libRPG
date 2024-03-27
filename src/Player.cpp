@@ -5,13 +5,14 @@
 
 using namespace std;
 
-void Player::ChangeKeybind()
-{
-
-}
-
 void Player::DetectInput()
 {
+	int currentSpeed = Player::walkingSpeed;
+	if(IsKeyDown(Player::sprintKey))
+	{
+		currentSpeed = Player::sprintSpeed;
+	}
+
 	if(IsKeyDown(Player::forwardKey))
 	{
 		Player::position.y = Player::position.y - Player::walkingSpeed;
@@ -32,8 +33,8 @@ void Player::DetectInput()
 
 void Player::DrawPlayer()
 {	
-	int spriteSheetWidth = Player::SpriteSheet.width;
-	int spriteSheetHeight = Player::SpriteSheet.height;
+	int spriteSheetWidth = LoadTexture(Player::SpriteSheet).width;
+	int spriteSheetHeight = LoadTexture(Player::SpriteSheet).height;
 
 	int spriteSheetColoumnSize = spriteSheetWidth / Player::spriteSheetColoumns;
 	int spriteSheetRowSize = spriteSheetHeight / Player::spriteSheetRows;
@@ -49,5 +50,5 @@ void Player::DrawPlayer()
 		destRect.width = Player::size.x;
 		destRect.height = Player::size.y;
 
-	DrawTexturePro(Player::SpriteSheet, sourceRect, destRect, {0, 0}, 0.0f, WHITE);
+	DrawTexturePro(LoadTexture(Player::SpriteSheet), sourceRect, destRect, {0, 0}, 0.0f, WHITE);
 }
