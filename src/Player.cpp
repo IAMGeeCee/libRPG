@@ -16,7 +16,7 @@ void Player::DetectInput()
 	if(IsKeyDown(Player::forwardKey))
 	{
 		Player::position.y = Player::position.y - currentSpeed;
-
+	}
 	if(IsKeyDown(Player::leftKey))
 	{
 		Player::position.x = Player::position.x - currentSpeed;
