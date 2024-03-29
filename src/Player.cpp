@@ -16,7 +16,7 @@ void Player::DetectInput()
 	if(IsKeyDown(Player::forwardKey))
 	{
 		Player::position.y = Player::position.y - currentSpeed;
-	}
+
 	if(IsKeyDown(Player::leftKey))
 	{
 		Player::position.x = Player::position.x - currentSpeed;
@@ -30,7 +30,7 @@ void Player::DetectInput()
 		Player::position.x = Player::position.x + currentSpeed;
 	}
 }
-
+ 
 void Player::DrawPlayer()
 {	
 	int spriteSheetWidth = LoadTexture(Player::SpriteSheet).width;
