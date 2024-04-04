@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\George\Code\libRPG\build\CMakeFiles\9c695548101e4cb115026258ff8396cb\NightlyMemoryCheck.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\George\Code\libRPG\external\tinyxml2-10.0.0\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\George\Code\libRPG\build\external\tinyxml2-10.0.0\CMakeFiles\NightlyMemoryCheck" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{7FD13C37-16CB-3CE6-844C-FF91D0188CB6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

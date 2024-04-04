@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxEllipse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxGroupLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxImage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxImageLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxObjectGroup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxPolygon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxPolyline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxProperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxPropertySet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxTerrain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxTerrainArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxTile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxTileLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxTileOffset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxTileset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\base64\base64.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\George\Code\libRPG\build\external\tmxparser-2.1.0\Tmx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxColor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxEllipse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxGroupLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxImageLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxMapTile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxObjectGroup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxPolygon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxPolyline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxProperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxPropertySet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxTerrain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxTerrainArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxTile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxTileLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxTileOffset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxTileset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\TmxUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\src\base64\base64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\George\Code\libRPG\external\tmxparser-2.1.0\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{CACF17F2-DEDC-38B5-82F2-74A45CDC3A12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{451FB747-CCCD-3FD8-8740-9288B0D6C686}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

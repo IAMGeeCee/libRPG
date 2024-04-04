@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.5)
+cmake_minimum_required(VERSION 3.28)
 project(libRPG)
 
 
@@ -16,6 +16,7 @@ FetchContent_MakeAvailable(raylib)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "") 
+
 
 # Define your library
 add_library(libRPG STATIC "src/Game.cpp" "src/Player.cpp")
