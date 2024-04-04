@@ -5,7 +5,6 @@ A game engine for C++ written with Raylib to make RPG games more easily.
 
 # Licences
 ## TMXPARSER
------------------------------------------------------------------------------
  Copyright (c) 2010-2014, Tamir Atias
  All rights reserved.
 
@@ -27,4 +26,3 @@ A game engine for C++ written with Raylib to make RPG games more easily.
  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
------------------------------------------------------------------------------
