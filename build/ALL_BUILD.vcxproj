@@ -185,29 +185,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{0406E290-8552-3CED-BD0A-FBA12F542101}</Project>
       <Name>raylib</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\George\Code\libRPG\build\external\tmxparser-2.1.0\run_tests.vcxproj">
-      <Project>{873BB18A-B403-3273-BB9C-542D04C11F25}</Project>
-      <Name>run_tests</Name>
-    </ProjectReference>
     <ProjectReference Include="C:\Users\George\Code\libRPG\build\test-game.vcxproj">
       <Project>{36A76C5C-0709-3E3A-83F2-0358B9392E8A}</Project>
       <Name>test-game</Name>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\George\Code\libRPG\build\external\tinyxml2-10.0.0\tinyxml2.vcxproj">
-      <Project>{E28666FB-B2B0-3C1F-93DD-F8153633D8BA}</Project>
-      <Name>tinyxml2</Name>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\George\Code\libRPG\build\external\tmxparser-2.1.0\tmxparser.vcxproj">
-      <Project>{DB424A3D-4B8B-318C-807B-ECD996C48F2F}</Project>
-      <Name>tmxparser</Name>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\George\Code\libRPG\build\external\tmxparser-2.1.0\tmxparser_static.vcxproj">
-      <Project>{168FB284-3B51-364A-935F-58BD3A53EDD0}</Project>
-      <Name>tmxparser_static</Name>
-    </ProjectReference>
-    <ProjectReference Include="C:\Users\George\Code\libRPG\build\external\tinyxml2-10.0.0\xmltest.vcxproj">
-      <Project>{E18AAA3C-3D3F-32CB-BE85-0DA10E7FEE14}</Project>
-      <Name>xmltest</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
