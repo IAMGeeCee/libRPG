@@ -12,4 +12,4 @@ public:
   string tileMapLocation;
   void LoadTileMap();
 
-}
+};
