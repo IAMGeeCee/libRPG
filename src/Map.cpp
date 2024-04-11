@@ -1,33 +1,56 @@
 #include "Map.h"
 #include "../external/rapidxml-1.13/rapidxml.hpp"
+#include "../external/rapidxml-1.13/rapidxml_utils.hpp"
+#include <list>
+#include <ostream>
 #include <sstream>
 #include <iostream>
 #include <fstream>
 #include <string>
 
-struct TilesetTile{
-  int id;
-  string path;
-};
+// thx stackoverflow ;)
+int getChildCount(rapidxml::xml_node<> *n)
+{
+  int c = 0;
+  for (rapidxml::xml_node<> *child = n->first_node(); child != NULL; child = child->next_sibling())
+  {
+    c++;
+  } 
+  return c;
+} 
 
 void Map::LoadTileMap(){
 
-    //Open the TileSet and parae it as xml
+    //Open the TileSet and parse it as xml
     rapidxml::xml_document<> TilesetXml;
-    std::ifstream TilesetFile;
-    TilesetFile.open(Map::tileSetLocation);
-    if (!TilesetFile.is_open())
+    std::ifstream Tilesetfile;
+    Tilesetfile.open(Map::tileSetLocation);
+    if (!Tilesetfile.is_open())
     {
         std::cerr << "Can't read xml file" << std::endl;
         return;
     }
-    std::stringstream TilesetBuffer;
-    TilesetBuffer << TilesetFile.rdbuf();
-    std::string TilesetFileContents = TilesetBuffer.str();
-    TilesetFile.close();
-    TilesetXml.parse<0>(&TilesetFile[0]);
+    std::stringstream tilesetbuffer;
+    tilesetbuffer << Tilesetfile.rdbuf();
+    std::string tilesetfileContents = tilesetbuffer.str();
+    Tilesetfile.close();
+    TilesetXml.parse<0>(&tilesetfileContents[0]);
+    
+    // List to store texture source paths with the same ID as they do in the .tsx file
+    list<string> listOfPaths;
+    rapidxml::xml_node<>* tilesetNode = TilesetXml.first_node();
+    list<string> paths;
+    for (rapidxml::xml_node<> *child = tilesetNode->first_node("tile"); child != NULL; child = child->next_sibling("tile")) /*I got this for loop of stackoverflow i have no idea how it works but it does so we dont mess with it*/
+    {
+      paths.push_back(child->first_node()->first_attribute("source")->value());
+      //cout << child->first_node()->first_attribute("source")->value(); //Makes a mess lol
+    } 
 
-    //TODO: do somthing with the tileset
+
+    return;// I haven't finished the bit below so its will probably cause some sorta runtime error or somthing
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 

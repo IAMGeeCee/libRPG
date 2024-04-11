@@ -19,7 +19,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
 
 # Define your library
-add_library(libRPG STATIC "src/Game.cpp" "src/Player.cpp")
+add_library(libRPG STATIC "src/Game.cpp" "src/Player.cpp" "src/Map.cpp")
 
 # Include paths for the library
 target_include_directories(libRPG PUBLIC src)

@@ -2,6 +2,7 @@
 #include <functional>
 #include <iostream>
 #include "Player.h"
+#include "Map.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ public:
 	~Game();
 	void StartGame(std::function<int()> mainLoop);
 	Player player;
-  
+  Map map;  
 private:
 	
 };

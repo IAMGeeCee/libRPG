@@ -259,6 +259,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClCompile Include="C:\Users\George\Code\libRPG\src\Game.cpp" />
     <ClCompile Include="C:\Users\George\Code\libRPG\src\Player.cpp" />
+    <ClCompile Include="C:\Users\George\Code\libRPG\src\Map.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\George\Code\libRPG\build\ZERO_CHECK.vcxproj">
