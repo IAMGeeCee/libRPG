@@ -3,6 +3,9 @@
 int MainLoop(Game& game)
 {
 	// Load the player
+  game.map.tileSetLocation = "../../test-game/Assets/tiles/Underworld.tsx";
+  game.map.tileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/World1.tmx";
+  game.map.LoadTileMap();
 	game.player.SpriteSheet = "../../test-game/Assets/animations/boy-sprite-sheet.png";
 	game.player.spriteSheetRows = 4;
 	game.player.spriteSheetColoumns = 3;
@@ -12,9 +15,6 @@ int MainLoop(Game& game)
 	game.player.canSprint = true;
 	game.player.DrawPlayer();
 	game.player.DetectInput();
-  game.map.tileSetLocation = "../../test-game/Assets/tiles/Underworld.tsx";
-  game.map.tileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/World1.tmx";
-  game.map.LoadTileMap();
 	return 0;
 }
 

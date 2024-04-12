@@ -4,12 +4,15 @@ using namespace std;
 
 class Map {
 public:
-  int tileHeight;
-  int tileWidth;
-  int tileMapHeight;
-  int tileMapWidth;
   string tileSetLocation;
   string tileMapLocation;
   void LoadTileMap();
+private:
+  void LoadTextures();
+  void DrawTileMap();
+  int tileHeight;
+  int tileWidth;
+  int mapWidth;
+  int mapHeight;
 
 };
