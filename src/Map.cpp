@@ -97,7 +97,10 @@ void Map::LoadTileMap(){
     }
     else
     {
-      // Load textures based on tile IDs
+      //This section of the code was almost all helped by ai cuz idk what im doing with this
+
+
+      //Creates list of all the textures
       std::vector<Texture2D> tileTextures;
       for (const auto &path : paths)
       {
@@ -105,7 +108,7 @@ void Map::LoadTileMap(){
           tileTextures.push_back(texture);
       }
 
-      // Parse the CSV data and draw the tilemap
+      //Parse the csv
       std::string csvData = layerDataNode->value();
       std::stringstream ss(csvData);
       std::string token;
@@ -116,7 +119,7 @@ void Map::LoadTileMap(){
         tileID = std::stoi(token);
         if (tileID != 0) // Assuming 0 means no tile
         {
-          // Get the texture for this tile
+            // Get the texture for this tile
             Texture2D texture = tileTextures[tileID - 1];
 
             // Calculate position to draw the tile
