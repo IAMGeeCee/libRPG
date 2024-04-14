@@ -1,14 +1,12 @@
 #include "Player.h"
 #include <raylib.h>
-#include <iostream>
-#include <list>
 
 using namespace std;
 
 void Player::DetectInput()
 {
 	int currentSpeed = Player::walkingSpeed;
-	if(IsKeyDown(Player::sprintKey))
+	if(IsKeyDown(Player::sprintKey) && Player::canSprint == true)
 	{
 		currentSpeed = Player::sprintSpeed;
 	}

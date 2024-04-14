@@ -7,7 +7,6 @@
 #include <fstream>
 #include <string>
 #include <raylib.h>
-#include <strstream>
 #include <vector>
 
 // thx stackoverflow ;)
@@ -52,10 +51,8 @@ void Map::LoadTileMap(){
     // List to store texture source paths with the same ID as they do in the .tsx file
     list<string> listOfPaths;
     rapidxml::xml_node<>* tilesetNode = TilesetXml.first_node();
-    Map::tileHeight = atoi(tilesetNode->first_attribute("tileheight")->value());
-    Map::tileWidth = atoi(tilesetNode->first_attribute("tilewidth")->value());
-    Map::tileHeight = 64;
-    Map::tileWidth = 64;
+   // Map::tileHeight = atoi(tilesetNode->first_attribute("tileheight")->value());
+   // Map::tileWidth = atoi(tilesetNode->first_attribute("tilewidth")->value());
     list<string> paths;
     for (rapidxml::xml_node<> *child = tilesetNode->first_node("tile"); child != NULL; child = child->next_sibling("tile")) /*Stack overflow lol*/
     {

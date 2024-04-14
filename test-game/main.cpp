@@ -1,4 +1,5 @@
-#include "Game.h"
+//#include "Game.h"
+#include "../src/Game.h"
 
 int MainLoop(Game& game)
 {
@@ -9,9 +10,9 @@ int MainLoop(Game& game)
 	game.player.SpriteSheet = "../../test-game/Assets/animations/boy-sprite-sheet.png";
 	game.player.spriteSheetRows = 4;
 	game.player.spriteSheetColoumns = 3;
-	game.player.size = {128,128};
-	game.player.walkingSpeed = 4;
-	game.player.sprintSpeed = 8;
+	game.player.size = {64,64};
+	game.player.walkingSpeed = 8;
+	game.player.sprintSpeed = 12;
 	game.player.canSprint = true;
 	game.player.DrawPlayer();
 	game.player.DetectInput();

@@ -10,9 +10,8 @@ public:
 private:
   void LoadTextures();
   void DrawTileMap();
-  int tileHeight;
-  int tileWidth;
-  int mapWidth;
-  int mapHeight;
-
+  int mapWidth = 100;
+  int mapHeight = 100;
+  int tileWidth = 64;
+  int tileHeight = 64;
 };
