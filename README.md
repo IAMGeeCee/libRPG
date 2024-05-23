@@ -1,6 +1,8 @@
 # 🎮 libRPG
 A game engine for C++ written with Raylib thats lets you manage a full top down game with a single instance of a class (sorta) while still being completly customisable.  
 
+To get started check out the wiki.
+
 !IMPORTANT! libRPG is in a VERY early alpha with basicaly no features
 
 # 💡 Features
