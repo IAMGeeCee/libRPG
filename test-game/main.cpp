@@ -4,13 +4,13 @@
 int MainLoop(Game& game)
 {
 	// Load the player
-  game.map.tileSetLocation = "../../test-game/Assets/tiles/Underworld.tsx";
-  game.map.tileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/World1.tmx";
-  game.map.LoadTileMap();
+  	game.map.tileSetLocation = "../../test-game/Assets/tiles/test-tileset.tsx";
+  	game.map.tileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/test-tilemap.tmx";
+  	game.map.LoadTileMap();
 	game.player.SpriteSheet = "../../test-game/Assets/animations/boy-sprite-sheet.png";
 	game.player.spriteSheetRows = 4;
 	game.player.spriteSheetColoumns = 3;
-	game.player.size = {64,64};
+	game.player.size = {32,32};
 	game.player.walkingSpeed = 8;
 	game.player.sprintSpeed = 12;
 	game.player.canSprint = true;

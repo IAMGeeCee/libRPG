@@ -140,7 +140,11 @@ void Map::ParseAndRenderTiles(const std::vector<Texture2D>& tileTextures) {
     file.close();
     TileMapXml.parse<0>(&fileContents[0]);
 
-    rapidxml::xml_node<> *firstNode = TileMapXml.first_node();
+    rapidxml::xml_node<> *firstNode = TileMapXml.first_node("map");
+    
+    Map::tileHeight = std::stoi(firstNode->first_attribute("tileheight")->value());
+    Map::tileWidth = std::stoi(firstNode->first_attribute("tilewidth")->value());
+
     auto layerNode = firstNode->first_node("layer");
     auto layerDataNode = layerNode->first_node("data");
     if (!layerDataNode || !layerDataNode->value()) {

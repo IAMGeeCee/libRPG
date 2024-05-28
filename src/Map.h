@@ -20,6 +20,6 @@ private:
 
     int mapWidth = 100;
     int mapHeight = 100;
-    int tileWidth = 64;
-    int tileHeight = 64;
+    int tileWidth = 0;
+    int tileHeight = 0;
 };
