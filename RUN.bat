@@ -11,6 +11,7 @@ cmake --build .
 rem Check the exit code of the build command
 if %errorlevel% neq 0 (
     echo Build failed.
+    cd ..
     exit /b %errorlevel%
 )
 

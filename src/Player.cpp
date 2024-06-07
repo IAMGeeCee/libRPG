@@ -31,8 +31,9 @@ void Player::DetectInput()
  
 void Player::DrawPlayer()
 {	
-	int spriteSheetWidth = LoadTexture(Player::SpriteSheet).width;
-	int spriteSheetHeight = LoadTexture(Player::SpriteSheet).height;
+	Texture2D PlayerTexture = LoadTexture(Player::SpriteSheet);
+	int spriteSheetWidth = PlayerTexture.width;
+	int spriteSheetHeight = PlayerTexture.height;
 
 	int spriteSheetColoumnSize = spriteSheetWidth / Player::spriteSheetColoumns;
 	int spriteSheetRowSize = spriteSheetHeight / Player::spriteSheetRows;
@@ -48,5 +49,5 @@ void Player::DrawPlayer()
 		destRect.width = Player::size.x;
 		destRect.height = Player::size.y;
 
-	DrawTexturePro(LoadTexture(Player::SpriteSheet), sourceRect, destRect, {0, 0}, 0.0f, WHITE);
+	DrawTexturePro(PlayerTexture, sourceRect, destRect, {0, 0}, 0.0f, WHITE);
 }
