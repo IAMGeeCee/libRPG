@@ -21,7 +21,6 @@ int MainLoop(Game& game)
 	game.player.cameraRotation = 0.0f;
 	game.player.isAnimatedOnMove = true;
 	game.player.DrawPlayer();
-	game.player.DetectInput();
 	return 0;
 }
 

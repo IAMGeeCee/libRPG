@@ -1,85 +1,97 @@
 #include "Player.h"
 #include <raylib.h>
-#include <iostream>;
+#include <iostream>
 
 using namespace std;
 
-void Player::DetectInput()
-{
-	int currentSpeed = walkingSpeed;
-	bool isMoving = false;
-
-	if (IsKeyDown(sprintKey) && canSprint)
-	{
-		currentSpeed = sprintSpeed;
-	}
-
-	if (IsKeyDown(forwardKey))
-	{
-		position.y -= currentSpeed * GetFrameTime(); // Ensure movement is frame-rate independent
-		isMoving = true;
-	}
-	if (IsKeyDown(leftKey))
-	{
-		position.x -= currentSpeed * GetFrameTime();
-		isMoving = true;
-	}
-	if (IsKeyDown(backwardKey))
-	{
-		position.y += currentSpeed * GetFrameTime();
-		isMoving = true;
-	}
-	if (IsKeyDown(rightKey))
-	{
-		position.x += currentSpeed * GetFrameTime();
-		isMoving = true;
-	}
-
-	if (isMoving && isAnimatedOnMove)
-	{
-		AnimatePlayerWalking();
-	}
+void Player::LoadPlayerTexture() {
+    PlayerTexture = LoadTexture(SpriteSheet);
+    spriteFrameSource = {0.0f, 0.0f, static_cast<float>(PlayerTexture.width / spriteSheetColumns), static_cast<float>(PlayerTexture.height / spriteSheetRows)};
 }
 
-void Player::DrawPlayer()
-{
-	PlayerTexture = LoadTexture(Player::SpriteSheet);
-	int spriteSheetWidth = PlayerTexture.width;
-	int spriteSheetHeight = PlayerTexture.height;
-
-	int spriteSheetColumnSize = spriteSheetWidth / spriteSheetColumns;
-	int spriteSheetRowSize = spriteSheetHeight / spriteSheetRows;
-
-	Rectangle sourceRect = {
-		currentFrame * size.x, // x-coordinate based on current frame
-		0,
-		static_cast<float>(spriteSheetColumnSize),
-		static_cast<float>(spriteSheetRowSize)};
-
-	Rectangle destRect = {
-		position.x,
-		position.y,
-		size.x,
-		size.y};
-
-	DrawTexturePro(PlayerTexture, sourceRect, destRect, {0, 0}, 0.0f, WHITE);
+void Player::UnloadPlayerTexture() {
+    UnloadTexture(PlayerTexture);
 }
 
-void Player::AnimatePlayerWalking()
-{
-	// Update elapsed time
-	elapsedTime += GetFrameTime();
+void Player::DrawPlayer() {
+    int currentSpeed = walkingSpeed;
+    isMoving = false;
 
-	// Check if it's time to advance to the next frame
-	if (elapsedTime >= frameDuration)
-	{
-		elapsedTime = 0.0f;
-		currentFrame++;
+    if (IsKeyDown(sprintKey) && canSprint) {
+        currentSpeed = sprintSpeed;
+    }
 
-		// Loop the animation
-		if (currentFrame >= frameCount)
-		{
-			currentFrame = 0;
-		}
-	}
+    if (IsKeyDown(forwardKey)) {
+        position.y -= currentSpeed * GetFrameTime();
+        isMoving = true;
+        if (isAnimatedOnMove) {
+            AnimatePlayerWalkingForward();
+			
+        }
+    }
+    if (IsKeyDown(leftKey)) {
+        position.x -= currentSpeed * GetFrameTime();
+        isMoving = true;
+        if (isAnimatedOnMove) {
+            AnimatePlayerWalkingLeft();
+        }
+    }
+    if (IsKeyDown(backwardKey)) {
+        position.y += currentSpeed * GetFrameTime();
+        isMoving = true;
+        if (isAnimatedOnMove) {
+            AnimatePlayerWalkingBackward();
+        }
+    }
+    if (IsKeyDown(rightKey)) {
+        position.x += currentSpeed * GetFrameTime();
+        isMoving = true;
+        if (isAnimatedOnMove) {
+            AnimatePlayerWalkingRight();
+        }
+    }
+
+	  Rectangle destRect = {
+        position.x,
+        position.y,
+        size.x,
+        size.y
+    };
+
+	if (isMoving) {
+        AnimatePlayerWalking();
+    }
+
+    DrawTexturePro(PlayerTexture, spriteFrameSource, destRect, {0, 0}, 0.0f, WHITE);
+}
+
+void Player::AnimatePlayerWalking() {
+    // Update elapsed time
+    framesCounter++;
+    if (framesCounter >= framesSpeed) {
+        framesCounter = 0;
+        currentFrame++;
+
+        if (currentFrame >= spriteSheetColumns) {
+            currentFrame = 0;
+        }
+
+        spriteFrameSource.x = static_cast<float>(currentFrame * size.x);
+    }
+}
+
+void Player::AnimatePlayerWalkingForward() {
+    spriteFrameSource.y = 0; // Row 0 for forward animation
+}
+
+void Player::AnimatePlayerWalkingBackward() {
+    spriteFrameSource.y = size.y * 1; // Row 1 for backward animation
+}
+
+void Player::AnimatePlayerWalkingLeft() {
+    spriteFrameSource.y = size.y * 2; // Row 2 for left animation
+}
+
+void Player::AnimatePlayerWalkingRight() {
+    spriteFrameSource.y = size.y * 3; // Row 3 for right animation
 }

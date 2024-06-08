@@ -38,6 +38,8 @@ void Game::StartGame(std::function<int()> mainLoop)
 		BeginDrawing();
 		ClearBackground(RAYWHITE); // Reload window so content is not drawn on top of existing content
 
+		player.LoadPlayerTexture();
+
 		//Camera
 		camera.target = player.position;
 		camera.offset = {static_cast<float>(GetScreenWidth()) / 2,
