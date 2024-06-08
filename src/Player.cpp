@@ -1,53 +1,85 @@
 #include "Player.h"
 #include <raylib.h>
+#include <iostream>;
 
 using namespace std;
 
 void Player::DetectInput()
 {
-	int currentSpeed = Player::walkingSpeed;
-	if(IsKeyDown(Player::sprintKey) && Player::canSprint == true)
+	int currentSpeed = walkingSpeed;
+	bool isMoving = false;
+
+	if (IsKeyDown(sprintKey) && canSprint)
 	{
-		currentSpeed = Player::sprintSpeed;
+		currentSpeed = sprintSpeed;
 	}
 
-	if(IsKeyDown(Player::forwardKey))
+	if (IsKeyDown(forwardKey))
 	{
-		Player::position.y = Player::position.y - currentSpeed;
+		position.y -= currentSpeed * GetFrameTime(); // Ensure movement is frame-rate independent
+		isMoving = true;
 	}
-	if(IsKeyDown(Player::leftKey))
+	if (IsKeyDown(leftKey))
 	{
-		Player::position.x = Player::position.x - currentSpeed;
+		position.x -= currentSpeed * GetFrameTime();
+		isMoving = true;
 	}
-	if(IsKeyDown(Player::backwardKey))
+	if (IsKeyDown(backwardKey))
 	{
-		Player::position.y = Player::position.y + currentSpeed;
+		position.y += currentSpeed * GetFrameTime();
+		isMoving = true;
 	}
-	if(IsKeyDown(Player::rightKey))
+	if (IsKeyDown(rightKey))
 	{
-		Player::position.x = Player::position.x + currentSpeed;
+		position.x += currentSpeed * GetFrameTime();
+		isMoving = true;
+	}
+
+	if (isMoving && isAnimatedOnMove)
+	{
+		AnimatePlayerWalking();
 	}
 }
- 
+
 void Player::DrawPlayer()
-{	
-	Texture2D PlayerTexture = LoadTexture(Player::SpriteSheet);
+{
+	PlayerTexture = LoadTexture(Player::SpriteSheet);
 	int spriteSheetWidth = PlayerTexture.width;
 	int spriteSheetHeight = PlayerTexture.height;
 
-	int spriteSheetColoumnSize = spriteSheetWidth / Player::spriteSheetColoumns;
-	int spriteSheetRowSize = spriteSheetHeight / Player::spriteSheetRows;
+	int spriteSheetColumnSize = spriteSheetWidth / spriteSheetColumns;
+	int spriteSheetRowSize = spriteSheetHeight / spriteSheetRows;
 
-	Rectangle sourceRect;
-		sourceRect.x = 0;
-		sourceRect.y = 0;
-		sourceRect.width = spriteSheetColoumnSize;
-		sourceRect.height = spriteSheetRowSize;
-	Rectangle destRect;
-		destRect.x = Player::position.x;
-		destRect.y = Player::position.y;
-		destRect.width = Player::size.x;
-		destRect.height = Player::size.y;
+	Rectangle sourceRect = {
+		currentFrame * size.x, // x-coordinate based on current frame
+		0,
+		static_cast<float>(spriteSheetColumnSize),
+		static_cast<float>(spriteSheetRowSize)};
+
+	Rectangle destRect = {
+		position.x,
+		position.y,
+		size.x,
+		size.y};
 
 	DrawTexturePro(PlayerTexture, sourceRect, destRect, {0, 0}, 0.0f, WHITE);
+}
+
+void Player::AnimatePlayerWalking()
+{
+	// Update elapsed time
+	elapsedTime += GetFrameTime();
+
+	// Check if it's time to advance to the next frame
+	if (elapsedTime >= frameDuration)
+	{
+		elapsedTime = 0.0f;
+		currentFrame++;
+
+		// Loop the animation
+		if (currentFrame >= frameCount)
+		{
+			currentFrame = 0;
+		}
+	}
 }
