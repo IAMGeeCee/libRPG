@@ -36,14 +36,10 @@ public:
     void AnimatePlayerWalkingRight();
 
 private:
- 	int currentFrame = 0;
-    int framesCounter = 0;
-    int framesSpeed = 10;
-    int frameCount = 3; // Number of frames in one row
-    float frameDuration = 0.1f; // Time per frame
-    float elapsedTime = 0.0f; // Time since last frame change
+ 	int CurrentFrame = 1;
     Rectangle spriteFrameSource; // Source rectangle for sprite frame
 	bool isMoving = false;
+
 };
 
 #endif // PLAYER_H

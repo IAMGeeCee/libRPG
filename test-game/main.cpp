@@ -30,6 +30,6 @@ int main()
 	// and then start the game with the user defined game logic function (line 6)
 	Game testgame = Game(); 
 	testgame.StartGame([&]() { return MainLoop(testgame); });
-
+	
 	return 0;
 }

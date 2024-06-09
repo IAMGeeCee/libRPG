@@ -1,6 +1,8 @@
 #include "Player.h"
 #include <raylib.h>
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
@@ -59,39 +61,37 @@ void Player::DrawPlayer() {
     };
 
 	if (isMoving) {
-        AnimatePlayerWalking();
+        std::thread t{ &Player::AnimatePlayerWalking, this };
+        t.join();
     }
 
     DrawTexturePro(PlayerTexture, spriteFrameSource, destRect, {0, 0}, 0.0f, WHITE);
 }
 
+
 void Player::AnimatePlayerWalking() {
-    // Update elapsed time
-    framesCounter++;
-    if (framesCounter >= framesSpeed) {
-        framesCounter = 0;
-        currentFrame++;
+    
 
-        if (currentFrame >= spriteSheetColumns) {
-            currentFrame = 0;
-        }
-
-        spriteFrameSource.x = static_cast<float>(currentFrame * size.x);
+    spriteFrameSource.x = static_cast<float>(CurrentFrame * size.x);
+    CurrentFrame++;
+    if (CurrentFrame == Player::spriteSheetColumns + 1){
+        CurrentFrame = 1;
     }
+    
 }
 
 void Player::AnimatePlayerWalkingForward() {
-    spriteFrameSource.y = 0; // Row 0 for forward animation
+    spriteFrameSource.y = size.y * 3; 
 }
 
 void Player::AnimatePlayerWalkingBackward() {
-    spriteFrameSource.y = size.y * 1; // Row 1 for backward animation
+    spriteFrameSource.y = 0; 
 }
 
 void Player::AnimatePlayerWalkingLeft() {
-    spriteFrameSource.y = size.y * 2; // Row 2 for left animation
+    spriteFrameSource.y = size.y * 1; 
 }
 
 void Player::AnimatePlayerWalkingRight() {
-    spriteFrameSource.y = size.y * 3; // Row 3 for right animation
+    spriteFrameSource.y = size.y * 2; 
 }
