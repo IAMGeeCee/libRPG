@@ -25,8 +25,6 @@ public:
     KeyboardKey sprintKey = KEY_LEFT_CONTROL;
 
     Texture2D PlayerTexture; // Player texture
-    void LoadPlayerTexture();
-    void UnloadPlayerTexture();
 
     void DrawPlayer();
     void AnimatePlayerWalking();

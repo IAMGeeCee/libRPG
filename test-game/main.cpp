@@ -1,5 +1,8 @@
-//#include "Game.h"
-#include "../src/Game.h"
+#include <string>
+#include <iostream>
+#include <thread>
+#include <Game.h>
+
 
 int MainLoop(Game& game)
 {
@@ -21,6 +24,8 @@ int MainLoop(Game& game)
 	game.player.cameraRotation = 0.0f;
 	game.player.isAnimatedOnMove = true;
 	game.player.DrawPlayer();
+
+
 	return 0;
 }
 

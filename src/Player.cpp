@@ -6,92 +6,110 @@
 
 using namespace std;
 
-void Player::LoadPlayerTexture() {
-    PlayerTexture = LoadTexture(SpriteSheet);
-    spriteFrameSource = {0.0f, 0.0f, static_cast<float>(PlayerTexture.width / spriteSheetColumns), static_cast<float>(PlayerTexture.height / spriteSheetRows)};
-}
+int currentFrameNumber = 1;
 
-void Player::UnloadPlayerTexture() {
-    UnloadTexture(PlayerTexture);
-}
+void Player::DrawPlayer()
+{   
+    PlayerTexture = LoadTexture(Player::SpriteSheet);
+    spriteFrameSource = {size.y * currentFrameNumber, 0.0f, static_cast<float>(PlayerTexture.width / spriteSheetColumns), static_cast<float>(PlayerTexture.height / spriteSheetRows)};
 
-void Player::DrawPlayer() {
     int currentSpeed = walkingSpeed;
     isMoving = false;
 
-    if (IsKeyDown(sprintKey) && canSprint) {
+    if (IsKeyDown(sprintKey) && canSprint)
+    {
         currentSpeed = sprintSpeed;
     }
 
-    if (IsKeyDown(forwardKey)) {
+    if (IsKeyDown(forwardKey))
+    {
         position.y -= currentSpeed * GetFrameTime();
         isMoving = true;
-        if (isAnimatedOnMove) {
+        if (isAnimatedOnMove)
+        {
             AnimatePlayerWalkingForward();
-			
         }
     }
-    if (IsKeyDown(leftKey)) {
+    if (IsKeyDown(leftKey))
+    {
         position.x -= currentSpeed * GetFrameTime();
         isMoving = true;
-        if (isAnimatedOnMove) {
+        if (isAnimatedOnMove)
+        {
             AnimatePlayerWalkingLeft();
         }
     }
-    if (IsKeyDown(backwardKey)) {
+    if (IsKeyDown(backwardKey))
+    {
         position.y += currentSpeed * GetFrameTime();
         isMoving = true;
-        if (isAnimatedOnMove) {
+        if (isAnimatedOnMove)
+        {
             AnimatePlayerWalkingBackward();
         }
     }
-    if (IsKeyDown(rightKey)) {
+    if (IsKeyDown(rightKey))
+    {
         position.x += currentSpeed * GetFrameTime();
         isMoving = true;
-        if (isAnimatedOnMove) {
+        if (isAnimatedOnMove)
+        {
             AnimatePlayerWalkingRight();
         }
     }
 
-	  Rectangle destRect = {
+    Rectangle destRect = {
         position.x,
         position.y,
         size.x,
-        size.y
-    };
+        size.y};
 
-	if (isMoving) {
-        std::thread t{ &Player::AnimatePlayerWalking, this };
-        t.join();
+    if (isMoving)
+    {
+        AnimatePlayerWalking();
     }
 
     DrawTexturePro(PlayerTexture, spriteFrameSource, destRect, {0, 0}, 0.0f, WHITE);
+
 }
 
+void Player::AnimatePlayerWalking()
+{
+    static float frameDelay = 0.07f; // Adjust this value to control the speed
+    static float timeSinceLastFrame = 0.0f;
 
-void Player::AnimatePlayerWalking() {
-    
+    timeSinceLastFrame += GetFrameTime(); // deltaTime is the time elapsed since the last frame
 
-    spriteFrameSource.x = static_cast<float>(CurrentFrame * size.x);
-    CurrentFrame++;
-    if (CurrentFrame == Player::spriteSheetColumns + 1){
-        CurrentFrame = 1;
+    if (timeSinceLastFrame >= frameDelay)
+    {
+        timeSinceLastFrame = 0.0f;
+
+        spriteFrameSource.x = static_cast<float>(CurrentFrame * size.x);
+        CurrentFrame++;
+        if (CurrentFrame == spriteSheetColumns + 1)
+        {
+            CurrentFrame = 1;
+        }
+        currentFrameNumber = CurrentFrame;
     }
-    
 }
 
-void Player::AnimatePlayerWalkingForward() {
-    spriteFrameSource.y = size.y * 3; 
+void Player::AnimatePlayerWalkingForward()
+{
+    spriteFrameSource.y = size.y * 3;
 }
 
-void Player::AnimatePlayerWalkingBackward() {
-    spriteFrameSource.y = 0; 
+void Player::AnimatePlayerWalkingBackward()
+{
+    spriteFrameSource.y = 0;
 }
 
-void Player::AnimatePlayerWalkingLeft() {
-    spriteFrameSource.y = size.y * 1; 
+void Player::AnimatePlayerWalkingLeft()
+{
+    spriteFrameSource.y = size.y * 1;
 }
 
-void Player::AnimatePlayerWalkingRight() {
-    spriteFrameSource.y = size.y * 2; 
+void Player::AnimatePlayerWalkingRight()
+{
+    spriteFrameSource.y = size.y * 2;
 }

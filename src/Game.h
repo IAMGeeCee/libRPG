@@ -12,7 +12,7 @@ public:
 	~Game();
 	void StartGame(std::function<int()> mainLoop);
 	Player player;
-  Map map;  
+  	Map map;  
 private:
-	
+	float deltaTime;
 };

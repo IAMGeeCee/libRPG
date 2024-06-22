@@ -35,10 +35,12 @@ void Game::StartGame(std::function<int()> mainLoop)
 
 	while (!WindowShouldClose()) // Main loop (repeats 1 time each frame i think)
 	{
+		float deltaTime = GetFrameTime();
+
 		BeginDrawing();
 		ClearBackground(RAYWHITE); // Reload window so content is not drawn on top of existing content
 
-		player.LoadPlayerTexture();
+		
 
 		//Camera
 		camera.target = player.position;
