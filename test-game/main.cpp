@@ -9,7 +9,7 @@ int MainLoop(Game& game)
 	
 	// Set up Map
   	game.map.tileSetLocation = "../../test-game/Assets/tiles/test-tileset.tsx";
-  	game.map.tileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/test-tilemap.tmx";
+  	game.map.tileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/World1.tmx";
   	game.map.LoadTileMap();
 
 	//Set up Player
