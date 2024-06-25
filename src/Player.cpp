@@ -11,8 +11,13 @@ int currentFrameNumber = 1;
 void Player::DrawPlayer()
 {
     Player::SetUpHitbox();
-    PlayerTexture = LoadTexture(Player::SpriteSheet);
-    spriteFrameSource = {size.y * currentFrameNumber, 0.0f, static_cast<float>(PlayerTexture.width / spriteSheetColumns), static_cast<float>(PlayerTexture.height / spriteSheetRows)};
+    if (!isTextureLoaded)
+    {
+        PlayerTexture = LoadTexture(Player::SpriteSheet);
+        spriteFrameSource = {size.y * currentFrameNumber, 0.0f, static_cast<float>(PlayerTexture.width / spriteSheetColumns), static_cast<float>(PlayerTexture.height / spriteSheetRows)};
+        isTextureLoaded = true;
+        cout << "Loaded player texture" << endl;
+    }
 
     int currentSpeed = walkingSpeed;
     isMoving = false;
@@ -125,4 +130,11 @@ void Player::SetUpHitbox()
                   Player::position.y + (Player::size.y - 2),
                   Player::size.x,
                   2, RED);
+}
+
+void Player::UnloadTexture()
+{
+    RAYLIB_H::UnloadTexture(PlayerTexture);
+    isTextureLoaded = false;
+    cout << "Unloaded player texture" << endl;
 }

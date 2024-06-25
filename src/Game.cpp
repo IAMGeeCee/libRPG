@@ -40,9 +40,7 @@ void Game::StartGame(std::function<int()> mainLoop)
 		BeginDrawing();
 		ClearBackground(RAYWHITE); // Reload window so content is not drawn on top of existing content
 
-		
-
-		//Camera
+		// Camera
 		camera.target = player.position;
 		camera.offset = {static_cast<float>(GetScreenWidth()) / 2,
 						 static_cast<float>(GetScreenHeight() / 2)};
@@ -53,6 +51,7 @@ void Game::StartGame(std::function<int()> mainLoop)
 
 		// End user defined logic runs
 		int mainLoopReturn = mainLoop();
+		map.UnloadTileTextures();
 		EndMode2D();
 
 		// Any gui must not be drawn in a Mode2D otherwise it will move with the camera
@@ -62,6 +61,7 @@ void Game::StartGame(std::function<int()> mainLoop)
 	}
 
 	map.UnloadTileTextures();
+	player.UnloadTexture();
 	// Game ended
 	CloseWindow();
 

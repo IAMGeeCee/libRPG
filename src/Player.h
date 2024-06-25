@@ -33,12 +33,14 @@ public:
     void AnimatePlayerWalkingBackward();
     void AnimatePlayerWalkingLeft();
     void AnimatePlayerWalkingRight();
+    void UnloadTexture();
 
 private:
  	int CurrentFrame = 1;
     Rectangle spriteFrameSource; // Source rectangle for sprite frame
 	bool isMoving = false;
     Rectangle hitBox;
+    bool isTextureLoaded = false;
 
     void SetUpHitbox();
 };

@@ -24,9 +24,6 @@ int MainLoop(Game& game)
 	game.player.cameraRotation = 0.0f;
 	game.player.isAnimatedOnMove = true;
 	game.player.DrawPlayer();
-	std::cout << "About to unload textures /n";
-	game.map.UnloadTileTextures();
-	std::cout << "Did it /n";
 
 	return 0;
 }
