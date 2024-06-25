@@ -61,6 +61,7 @@ void Game::StartGame(std::function<int()> mainLoop)
 		EndDrawing();
 	}
 
+	map.UnloadTileTextures();
 	// Game ended
 	CloseWindow();
 

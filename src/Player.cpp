@@ -9,7 +9,8 @@ using namespace std;
 int currentFrameNumber = 1;
 
 void Player::DrawPlayer()
-{   
+{
+    Player::SetUpHitbox();
     PlayerTexture = LoadTexture(Player::SpriteSheet);
     spriteFrameSource = {size.y * currentFrameNumber, 0.0f, static_cast<float>(PlayerTexture.width / spriteSheetColumns), static_cast<float>(PlayerTexture.height / spriteSheetRows)};
 
@@ -70,7 +71,6 @@ void Player::DrawPlayer()
     }
 
     DrawTexturePro(PlayerTexture, spriteFrameSource, destRect, {0, 0}, 0.0f, WHITE);
-
 }
 
 void Player::AnimatePlayerWalking()
@@ -112,4 +112,17 @@ void Player::AnimatePlayerWalkingLeft()
 void Player::AnimatePlayerWalkingRight()
 {
     spriteFrameSource.y = size.y * 2;
+}
+
+void Player::SetUpHitbox()
+{
+    Player::hitBox = {
+        Player::position.x,
+        Player::position.y + (Player::size.y - 2),
+        Player::size.x,
+        2};
+    DrawRectangle(Player::position.x,
+                  Player::position.y + (Player::size.y - 2),
+                  Player::size.x,
+                  2, RED);
 }

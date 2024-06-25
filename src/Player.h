@@ -17,6 +17,7 @@ public:
     bool isAnimatedOnMove = true;
     float cameraZoom = 2.0f;
     float cameraRotation = 0.0f;
+    
 
     KeyboardKey forwardKey = KEY_W;
     KeyboardKey backwardKey = KEY_S;
@@ -37,7 +38,9 @@ private:
  	int CurrentFrame = 1;
     Rectangle spriteFrameSource; // Source rectangle for sprite frame
 	bool isMoving = false;
+    Rectangle hitBox;
 
+    void SetUpHitbox();
 };
 
 #endif // PLAYER_H

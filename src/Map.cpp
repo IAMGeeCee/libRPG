@@ -38,7 +38,7 @@ void Map::LoadTileMap() {
     }
 
     // Load tile textures
-    std::vector<Texture2D> tileTextures = LoadTileTextures(texturePaths);
+    Map::tileTextures = LoadTileTextures(texturePaths);
 
     // Load tilemap XML and get map attributes
     if (!LoadTileMapAttributes(tileMapLocation)) {
@@ -47,7 +47,7 @@ void Map::LoadTileMap() {
     }
 
     // Parse CSV data and render tiles
-    ParseAndRenderTiles(tileTextures);
+    ParseAndRenderTiles();
 }
 
 std::list<std::string> Map::LoadTilesetXml(const std::string& filePath) {
@@ -126,7 +126,7 @@ bool Map::LoadTileMapAttributes(const std::string& filePath) {
     return true;
 }
 
-void Map::ParseAndRenderTiles(const std::vector<Texture2D>& tileTextures) {
+void Map::ParseAndRenderTiles() {
     rapidxml::xml_document<> TileMapXml;
     std::ifstream file(tileMapLocation);
     if (!file.is_open()) {
@@ -190,4 +190,11 @@ void Map::ParseAndRenderTiles(const std::vector<Texture2D>& tileTextures) {
             y++;
         }
     }
+}
+
+void Map::UnloadTileTextures() {
+    for (auto& texture : tileTextures) {
+        UnloadTexture(texture);
+    }
+    tileTextures.clear(); // Clear the vector after unloading
 }
