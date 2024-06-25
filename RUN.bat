@@ -1,6 +1,6 @@
 @echo off
 rem Change to the specified directory
-cd /d "C:\Users\George\Dev\libRPG\Build" || (
+cd "build" || (
     echo Failed to change directory to Build.
     exit /b 1
 )
