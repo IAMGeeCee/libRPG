@@ -10,7 +10,7 @@ int currentFrameNumber = 1;
 
 void Player::DrawPlayer()
 {
-    Player::SetUpHitbox();
+
     if (!isTextureLoaded)
     {
         PlayerTexture = LoadTexture(Player::SpriteSheet);
@@ -35,6 +35,7 @@ void Player::DrawPlayer()
         {
             AnimatePlayerWalkingForward();
         }
+        Player::MoveHitbox(forwardKey, currentSpeed);
     }
     if (IsKeyDown(leftKey))
     {
@@ -43,7 +44,8 @@ void Player::DrawPlayer()
         if (isAnimatedOnMove)
         {
             AnimatePlayerWalkingLeft();
-        }
+        }        
+        Player::MoveHitbox(leftKey, currentSpeed);
     }
     if (IsKeyDown(backwardKey))
     {
@@ -53,6 +55,8 @@ void Player::DrawPlayer()
         {
             AnimatePlayerWalkingBackward();
         }
+        
+        Player::MoveHitbox(backwardKey, currentSpeed);
     }
     if (IsKeyDown(rightKey))
     {
@@ -62,6 +66,8 @@ void Player::DrawPlayer()
         {
             AnimatePlayerWalkingRight();
         }
+        
+        Player::MoveHitbox(rightKey, currentSpeed);
     }
 
     Rectangle destRect = {
@@ -119,17 +125,44 @@ void Player::AnimatePlayerWalkingRight()
     spriteFrameSource.y = size.y * 2;
 }
 
-void Player::SetUpHitbox()
+void Player::MoveHitbox(KeyboardKey Direction, int currentSpeed)
 {
-    Player::hitBox = {
-        Player::position.x,
-        Player::position.y + (Player::size.y - 2),
-        Player::size.x,
-        2};
-    DrawRectangle(Player::position.x,
-                  Player::position.y + (Player::size.y - 2),
-                  Player::size.x,
-                  2, RED);
+    if (Direction == Player::forwardKey)
+    {
+        Player::hitBox = {
+            Player::position.x,
+            (Player::position.y + (Player::size.y - 2)) - 1,
+            Player::size.x,
+            2};
+        DrawRectangle(hitBox.x, hitBox.y, hitBox.width, hitBox.height, RED);
+    }
+    if (Direction == Player::leftKey)
+    {
+        Player::hitBox = {
+            (Player::position.x) - 1,
+            Player::position.y + (Player::size.y - 2),
+            Player::size.x,
+            2};
+        DrawRectangle(hitBox.x, hitBox.y, hitBox.width, hitBox.height, RED);
+    }
+    if (Direction == Player::rightKey)
+    {
+        Player::hitBox = {
+            Player::position.x + 1,
+            Player::position.y + (Player::size.y - 2),
+            Player::size.x,
+            2};
+        DrawRectangle(hitBox.x, hitBox.y, hitBox.width, hitBox.height, RED);
+    }
+    if (Direction == Player::backwardKey)
+    {
+        Player::hitBox = {
+            Player::position.x,
+            (Player::position.y + (Player::size.y - 2)) + 1,
+            Player::size.x,
+            2};
+        DrawRectangle(hitBox.x, hitBox.y, hitBox.width, hitBox.height, RED);
+    }
 }
 
 void Player::UnloadTexture()

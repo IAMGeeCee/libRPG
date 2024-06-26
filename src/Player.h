@@ -42,7 +42,7 @@ private:
     Rectangle hitBox;
     bool isTextureLoaded = false;
 
-    void SetUpHitbox();
+    void MoveHitbox(KeyboardKey Direction, int currentSpeed );
 };
 
 #endif // PLAYER_H
