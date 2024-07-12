@@ -9,8 +9,6 @@
 #include <raylib.h>
 #include <vector>
 
-
-
 // Count child nodes of an XML node
 int getChildCount(rapidxml::xml_node<> *n)
 {
@@ -91,6 +89,7 @@ list<TileTextureInfo> Map::LoadTilesetXml(const string &filePath)
             if (sourceAttr)
             {
                 TileTextureInfo textureInfo;
+                //TODO: Find out if its walkable or not and add it to the Info
                 textureInfo.path = sourceAttr->value();
                 paths.push_back(textureInfo);
             }
@@ -110,6 +109,8 @@ std::vector<TileTextureInfo> Map::LoadTileTextures(const std::list<TileTextureIn
     for (const auto &path : paths)
     {
         TileTextureInfo texture;
+        texture.canWalk = path.canWalk;
+        texture.path = path.path;
         texture.tiletexture = LoadTexture(path.path.c_str());
         textures.push_back(texture);
     }
@@ -194,6 +195,10 @@ void Map::ParseAndRenderTiles()
         { // Assuming 0 means no tile
             // Get the texture for this tile
             Texture2D texture = tileTextures[tileID - 1].tiletexture;
+            
+            //TODO: Get the X an Y to actually be right.
+            tileTextures[tileID - 1].x = x;
+            tileTextures[tileID - 1].y = y;
 
             // Calculate position to draw the tile
             Vector2 position = {static_cast<float>(x * tileWidth), static_cast<float>(y * tileHeight)};
