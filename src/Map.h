@@ -5,6 +5,16 @@
 
 using namespace std;
 
+class TileTextureInfo
+{
+    public:
+    string path = "";
+    bool canWalk = true;
+    int x;
+    int y;
+    Texture2D tiletexture;
+};
+
 class Map {
 public:
     string tileSetLocation;
@@ -14,11 +24,11 @@ public:
 
 private:
     void LoadTextures(const list<string>& paths, vector<Texture2D>& tileTextures);
-    list<string> LoadTilesetXml(const string& filePath);
+    list<TileTextureInfo> LoadTilesetXml(const string& filePath);
     bool LoadTileMapAttributes(const string& filePath);
     void ParseAndRenderTiles();
-    vector<Texture2D> LoadTileTextures(const list<string>& paths);
-    std::vector<Texture2D> tileTextures;
+    vector<TileTextureInfo> LoadTileTextures(const list<TileTextureInfo>& paths);
+    std::vector<TileTextureInfo> tileTextures;
 
     int mapWidth = 100;
     int mapHeight = 100;
