@@ -72,8 +72,8 @@ std::list<std::string> Map::LoadTilesetXml(const std::string& filePath) {
     }
 
     for (rapidxml::xml_node<> *child = tilesetNode->first_node("tile"); child != nullptr; child = child->next_sibling("tile")) {
-        if (child->first_node()) {
-            auto sourceAttr = child->first_node()->first_attribute("source");
+        if (child->first_node("image")) {
+            auto sourceAttr = child->first_node("image")->first_attribute("source");
             if (sourceAttr) {
                 paths.push_back(sourceAttr->value());
             } else {

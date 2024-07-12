@@ -29,6 +29,9 @@
   <image width="32" height="32" source="../../test-game/Assets/tiles/CaveGround-WallTopRightCorner.png"/>
  </tile>
  <tile id="9">
+ <properties>
+   <property name="walkable" type="bool" value="true"/>
+  </properties>
   <image width="32" height="32" source="../../test-game/Assets/tiles/CaveInsideBackground.png"/>
  </tile>
  <tile id="10">
