@@ -57,6 +57,9 @@ void Game::StartGame(std::function<int()> mainLoop)
 		// Any gui must not be drawn in a Mode2D otherwise it will move with the camera
 		DrawFPS(50, 50);
 
+		std::string positionText = std::to_string(static_cast<int>(player.position.x)/map.tileWidth) + ',' + std::to_string(static_cast<int>(player.position.y)/map.tileHeight);
+		DrawText(positionText.c_str(), 50, 100, 25, GREEN);
+
 		EndDrawing();
 	}
 

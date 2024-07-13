@@ -89,7 +89,32 @@ list<TileTextureInfo> Map::LoadTilesetXml(const string &filePath)
             if (sourceAttr)
             {
                 TileTextureInfo textureInfo;
-                //TODO: Find out if its walkable or not and add it to the Info
+
+                auto propertiesNode = child->first_node("properties");
+                if (propertiesNode != 0)
+                {
+                    auto property = propertiesNode->first_node("property");
+                    if (property != 0)
+                    {
+                        if (property->first_attribute("value")->value())
+                        {
+                            textureInfo.canWalk = true;
+                        }
+                        else
+                        {
+                            textureInfo.canWalk = false;
+                        }
+                    }
+                    else
+                    {
+                        textureInfo.canWalk = false;
+                    }
+                }
+                else
+                {
+                    textureInfo.canWalk = false;
+                }
+
                 textureInfo.path = sourceAttr->value();
                 paths.push_back(textureInfo);
             }
@@ -111,6 +136,8 @@ std::vector<TileTextureInfo> Map::LoadTileTextures(const std::list<TileTextureIn
         TileTextureInfo texture;
         texture.canWalk = path.canWalk;
         texture.path = path.path;
+        texture.position.x = path.position.x; // Assign the X position
+        texture.position.y = path.position.y; // Assign the Y position
         texture.tiletexture = LoadTexture(path.path.c_str());
         textures.push_back(texture);
     }
@@ -171,8 +198,10 @@ void Map::ParseAndRenderTiles()
 
     rapidxml::xml_node<> *firstNode = TileMapXml.first_node("map");
 
-    Map::tileHeight = std::stoi(firstNode->first_attribute("tileheight")->value());
-    Map::tileWidth = std::stoi(firstNode->first_attribute("tilewidth")->value());
+    mapHeight = std::stoi(firstNode->first_attribute("height")->value());
+    mapWidth = std::stoi(firstNode->first_attribute("width")->value());
+    tileHeight = std::stoi(firstNode->first_attribute("tileheight")->value());
+    tileWidth = std::stoi(firstNode->first_attribute("tilewidth")->value());
 
     auto layerNode = firstNode->first_node("layer");
     auto layerDataNode = layerNode->first_node("data");
@@ -185,39 +214,30 @@ void Map::ParseAndRenderTiles()
     std::string csvData = layerDataNode->value();
     std::stringstream ss(csvData);
     std::string token;
-    int tileID;
     int x = 0, y = 0;
+
+    tiles.resize(mapHeight);
+    for (int i = 0; i < mapHeight; ++i)
+    {
+        tiles[i].resize(mapWidth);
+    }
 
     while (std::getline(ss, token, ','))
     {
-        tileID = std::stoi(token);
+        int tileID = std::stoi(token);
         if (tileID != 0)
         { // Assuming 0 means no tile
             // Get the texture for this tile
             Texture2D texture = tileTextures[tileID - 1].tiletexture;
-            
-            //TODO: Get the X an Y to actually be right.
-            tileTextures[tileID - 1].x = x;
-            tileTextures[tileID - 1].y = y;
 
-            // Calculate position to draw the tile
-            Vector2 position = {static_cast<float>(x * tileWidth), static_cast<float>(y * tileHeight)};
+            // Create TileInfo object
+            TileTextureInfo tile;
+            tile.tiletexture = texture;
+            tile.position = {static_cast<float>(x * tileWidth), static_cast<float>(y * tileHeight)};
+            tile.canWalk = tileTextures[tileID - 1].canWalk; // Set walkability based on your logic
 
-            // Define source and destination rectangles
-            Rectangle sourceRect = {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)};
-            Rectangle destRect = {position.x, position.y, static_cast<float>(tileWidth), static_cast<float>(tileHeight)};
-
-            // If tile width or height is greater than the texture's width or height, scale it
-            if (tileWidth > texture.width || tileHeight > texture.height)
-            {
-                float scaleX = static_cast<float>(tileWidth) / static_cast<float>(texture.width);
-                float scaleY = static_cast<float>(tileHeight) / static_cast<float>(texture.height);
-                destRect.width *= scaleX;
-                destRect.height *= scaleY;
-            }
-
-            // Draw the tile
-            DrawTexturePro(texture, sourceRect, destRect, Vector2{0, 0}, 0, WHITE);
+            // Store TileInfo in the tiles vector
+            tiles[y][x] = tile;
         }
 
         // Move to the next tile position
@@ -228,6 +248,24 @@ void Map::ParseAndRenderTiles()
             y++;
         }
     }
+
+    for (int y = 0; y < mapHeight; ++y)
+    {
+        for (int x = 0; x < mapWidth; ++x)
+        {
+            if (tiles[y][x].tiletexture.id != 0)
+            { // Check if texture is valid
+                Texture2D texture = tiles[y][x].tiletexture;
+                Vector2 position = tiles[y][x].position;
+
+                Rectangle sourceRect = {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)};
+                Rectangle destRect = {position.x, position.y, static_cast<float>(tileWidth), static_cast<float>(tileHeight)};
+
+                // Draw the tile
+                DrawTexturePro(texture, sourceRect, destRect, Vector2{0, 0}, 0, WHITE);
+            }
+        }
+    }
 }
 
 void Map::UnloadTileTextures()
@@ -236,5 +274,17 @@ void Map::UnloadTileTextures()
     {
         UnloadTexture(texture.tiletexture);
     }
+
     tileTextures.clear(); // Clear the vector after unloading
+}
+
+bool Map::IsTileWalkable(int x, int y)
+{
+    if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+    {
+        // Out of bounds
+        return false;
+    }
+
+    return tiles[y][x].canWalk;
 }

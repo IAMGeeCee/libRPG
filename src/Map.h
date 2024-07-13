@@ -10,8 +10,7 @@ class TileTextureInfo
     public:
     string path = "";
     bool canWalk = true;
-    int x;
-    int y;
+    Vector2 position = {0,0};
     Texture2D tiletexture;
 };
 
@@ -21,6 +20,9 @@ public:
     string tileMapLocation;
     void LoadTileMap();
     void UnloadTileTextures();
+    bool IsTileWalkable(int x, int y);
+    int tileWidth = 0;
+    int tileHeight = 0;
 
 private:
     void LoadTextures(const list<string>& paths, vector<Texture2D>& tileTextures);
@@ -29,11 +31,10 @@ private:
     void ParseAndRenderTiles();
     vector<TileTextureInfo> LoadTileTextures(const list<TileTextureInfo>& paths);
     std::vector<TileTextureInfo> tileTextures;
+    std::vector<std::vector<TileTextureInfo>> tiles;
 
     int mapWidth = 100;
     int mapHeight = 100;
-    int tileWidth = 0;
-    int tileHeight = 0;
 
 protected:
 };
