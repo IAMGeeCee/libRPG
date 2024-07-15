@@ -19,7 +19,7 @@ int MainLoop(Game& game)
 	game.player.size = {32,32};
 	game.player.walkingSpeed = 80;
 	game.player.sprintSpeed = 160;
-	game.player.cameraZoom = 4;
+	game.player.cameraZoom = 0.5;
 	game.player.canSprint = true;
 	game.player.cameraRotation = 0.0f;
 	game.player.isAnimatedOnMove = true;

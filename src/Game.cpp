@@ -17,15 +17,15 @@ Game::~Game() {}
 
 void Game::StartGame(std::function<int()> mainLoop)
 {
-	// Main game starting point
+	//Main game starting point
 
-	// Set up window
-	InitWindow(GetScreenHeight(), GetScreenWidth(), "test game");
-	SetConfigFlags(FLAG_VSYNC_HINT); // Set FPS to vsync
+	//Set up window
+	InitWindow(GetScreenHeight(), GetScreenWidth(), "LibRPG (dev) Game");
 	ToggleFullscreen();
-	SetTraceLogLevel(LOG_WARNING); // Less rubbish in console
+	SetConfigFlags(FLAG_VSYNC_HINT); //Enable VSYNC
+	SetTraceLogLevel(LOG_WARNING); //Print less to console
 
-	// Games camera
+	//Camera
 	Camera2D camera = {0};
 	camera.target = player.position;
 	camera.offset = {static_cast<float>(GetScreenWidth()) / 2,
@@ -33,32 +33,28 @@ void Game::StartGame(std::function<int()> mainLoop)
 	camera.rotation = 0.0f;
 	camera.zoom = Game::player.cameraZoom;
 
-	while (!WindowShouldClose()) // Main loop (repeats 1 time each frame i think)
+	while (!WindowShouldClose())
 	{
-		float deltaTime = GetFrameTime();
-
+		//Begin drawing
 		BeginDrawing();
-		ClearBackground(RAYWHITE); // Reload window so content is not drawn on top of existing content
+		ClearBackground(RAYWHITE); //Clear the screen to stop overlap
 
-		// Camera
+		//Camera
 		camera.target = player.position;
-		camera.offset = {static_cast<float>(GetScreenWidth()) / 2,
-						 static_cast<float>(GetScreenHeight() / 2)};
-		camera.rotation = 0.0f;
-		camera.zoom = Game::player.cameraZoom;
+		camera.offset = {static_cast<float>(GetScreenWidth()) / 2, static_cast<float>(GetScreenHeight() ) / 2};
 		camera.rotation = Game::player.cameraRotation;
+		camera.zoom = Game::player.cameraZoom;
 		BeginMode2D(camera);
 
-		// End user defined logic runs
+		//Do the users logic
 		int mainLoopReturn = mainLoop();
-		map.UnloadTileTextures();
+
+
 		EndMode2D();
 
 		// Any gui must not be drawn in a Mode2D otherwise it will move with the camera
 		DrawFPS(50, 50);
-
-		std::string positionText = std::to_string(static_cast<int>(player.position.x)/map.tileWidth) + ',' + std::to_string(static_cast<int>(player.position.y)/map.tileHeight);
-		DrawText(positionText.c_str(), 50, 100, 25, GREEN);
+		DrawText((std::to_string(static_cast<int>(player.position.x) / map.tileWidth) + ',' + std::to_string(static_cast<int>(player.position.y) / map.tileHeight)).c_str(), 50, 100, 25, GREEN);
 
 		EndDrawing();
 	}

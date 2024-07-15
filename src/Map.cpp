@@ -237,7 +237,7 @@ void Map::ParseAndRenderTiles()
             tile.canWalk = tileTextures[tileID - 1].canWalk; // Set walkability based on your logic
 
             // Store TileInfo in the tiles vector
-            tiles[y][x] = tile;
+            tiles[x][y] = tile;
         }
 
         // Move to the next tile position
@@ -253,10 +253,10 @@ void Map::ParseAndRenderTiles()
     {
         for (int x = 0; x < mapWidth; ++x)
         {
-            if (tiles[y][x].tiletexture.id != 0)
+            if (tiles[x][y].tiletexture.id != 0)
             { // Check if texture is valid
-                Texture2D texture = tiles[y][x].tiletexture;
-                Vector2 position = tiles[y][x].position;
+                Texture2D texture = tiles[x][y].tiletexture;
+                Vector2 position = tiles[x][y].position;
 
                 Rectangle sourceRect = {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)};
                 Rectangle destRect = {position.x, position.y, static_cast<float>(tileWidth), static_cast<float>(tileHeight)};
@@ -286,5 +286,5 @@ bool Map::IsTileWalkable(int x, int y)
         return false;
     }
 
-    return tiles[y][x].canWalk;
+    return tiles[x][y].canWalk;
 }
