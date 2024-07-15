@@ -21,6 +21,7 @@ public:
     void LoadTileMap();
     void UnloadTileTextures();
     bool IsTileWalkable(int x, int y);
+    void Map::DrawMapToConsole();
     int tileWidth = 0;
     int tileHeight = 0;
 

@@ -237,7 +237,7 @@ void Map::ParseAndRenderTiles()
             tile.canWalk = tileTextures[tileID - 1].canWalk; // Set walkability based on your logic
 
             // Store TileInfo in the tiles vector
-            tiles[x][y] = tile;
+            tiles[y][x] = tile;
         }
 
         // Move to the next tile position
@@ -262,7 +262,9 @@ void Map::ParseAndRenderTiles()
                 Rectangle destRect = {position.x, position.y, static_cast<float>(tileWidth), static_cast<float>(tileHeight)};
 
                 // Draw the tile
-                DrawTexturePro(texture, sourceRect, destRect, Vector2{0, 0}, 0, WHITE);
+                
+                    DrawTexturePro(texture, sourceRect, destRect, Vector2{0, 0}, 0, WHITE);
+                
             }
         }
     }
@@ -287,4 +289,34 @@ bool Map::IsTileWalkable(int x, int y)
     }
 
     return tiles[x][y].canWalk;
+}
+
+void Map::DrawMapToConsole()
+{
+    for (int y = 0; y < mapHeight; ++y)
+    {
+        for (int x = 0; x < mapWidth; ++x)
+        {
+            if (tiles[x][y].tiletexture.id < 10)
+            {
+                cout << tiles[x][y].tiletexture.id << "" << ",";
+            }
+            else
+            {
+                cout << tiles[x][y].tiletexture.id << ",";
+            }
+        }
+        cout << endl;
+    }
+    cout << endl
+         << "DEBUG INFO" << endl;
+    cout << endl
+         << "Map Width: " << Map::mapWidth << endl;
+    cout << "Map Height: " << Map::mapHeight << endl;
+    cout << "Tile Height: " << Map::tileHeight << endl;
+    cout << "Tile Width: " << Map::tileWidth << endl;
+    cout << "Map location: " << Map::tileMapLocation << endl;
+    cout << "Set location: " << Map::tileSetLocation << endl;
+    cout << "Number of tiles: " << Map::tiles.size() * Map::tiles[1].size() << endl;
+    cout << "Number of textures: " << Map::tileTextures.size() << endl;
 }
