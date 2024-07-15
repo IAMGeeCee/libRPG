@@ -59,7 +59,6 @@ void Game::StartGame(std::function<int()> mainLoop)
 		EndDrawing();
 	}
 
-	//map.DrawMapToConsole();
 	map.UnloadTileTextures();
 	player.UnloadTexture();
 	// Game ended
