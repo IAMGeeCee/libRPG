@@ -43,9 +43,12 @@ void Map::LoadTileMap()
         return;
     }
 
-    // Load tile textures
-    Map::tileTextures = LoadTileTextures(texturePaths);
-
+    if (!areTexturesLoaded)
+    {
+        // Load tile textures
+        Map::tileTextures = LoadTileTextures(texturePaths);
+        areTexturesLoaded = true;
+    }
     // Load tilemap XML and get map attributes
     if (!LoadTileMapAttributes(tileMapLocation))
     {
@@ -215,6 +218,7 @@ void Map::ParseAndRenderTiles()
     std::stringstream ss(csvData);
     std::string token;
     int x = 0, y = 0;
+    int tileID;
 
     tiles.resize(mapHeight);
     for (int i = 0; i < mapHeight; ++i)
@@ -224,48 +228,43 @@ void Map::ParseAndRenderTiles()
 
     while (std::getline(ss, token, ','))
     {
-        int tileID = std::stoi(token);
+        tileID = std::stoi(token);
         if (tileID != 0)
         { // Assuming 0 means no tile
             // Get the texture for this tile
             Texture2D texture = tileTextures[tileID - 1].tiletexture;
 
-            // Create TileInfo object
-            TileTextureInfo tile;
-            tile.tiletexture = texture;
-            tile.position = {static_cast<float>(x * tileWidth), static_cast<float>(y * tileHeight)};
-            tile.canWalk = tileTextures[tileID - 1].canWalk; // Set walkability based on your logic
+            // TODO: Get the X an Y to actually be right.
+            tileTextures[tileID - 1].position.x = x;
+            tileTextures[tileID - 1].position.y = y;
 
-            // Store TileInfo in the tiles vector
-            tiles[y][x] = tile;
+            // Calculate position to draw the tile
+            Vector2 position = {static_cast<float>(x * tileWidth), static_cast<float>(y * tileHeight)};
+
+            // Define source and destination rectangles
+            Rectangle sourceRect = {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)};
+            Rectangle destRect = {position.x, position.y, static_cast<float>(tileWidth), static_cast<float>(tileHeight)};
+
+            // If tile width or height is greater than the texture's width or height, scale it
+            if (tileWidth > texture.width || tileHeight > texture.height)
+            {
+                float scaleX = static_cast<float>(tileWidth) / static_cast<float>(texture.width);
+                float scaleY = static_cast<float>(tileHeight) / static_cast<float>(texture.height);
+                destRect.width *= scaleX;
+                destRect.height *= scaleY;
+            }
+
+            // Draw the tile
+            DrawTexturePro(texture, sourceRect, destRect, Vector2{0, 0}, 0, WHITE);
         }
 
         // Move to the next tile position
+
         x++;
         if (x >= mapWidth)
         {
             x = 0;
             y++;
-        }
-    }
-
-    for (int y = 0; y < mapHeight; ++y)
-    {
-        for (int x = 0; x < mapWidth; ++x)
-        {
-            if (tiles[x][y].tiletexture.id != 0)
-            { // Check if texture is valid
-                Texture2D texture = tiles[x][y].tiletexture;
-                Vector2 position = tiles[x][y].position;
-
-                Rectangle sourceRect = {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)};
-                Rectangle destRect = {position.x, position.y, static_cast<float>(tileWidth), static_cast<float>(tileHeight)};
-
-                // Draw the tile
-                
-                    DrawTexturePro(texture, sourceRect, destRect, Vector2{0, 0}, 0, WHITE);
-                
-            }
         }
     }
 }
@@ -278,6 +277,8 @@ void Map::UnloadTileTextures()
     }
 
     tileTextures.clear(); // Clear the vector after unloading
+
+    areTexturesLoaded = false;
 }
 
 bool Map::IsTileWalkable(int x, int y)
@@ -288,7 +289,7 @@ bool Map::IsTileWalkable(int x, int y)
         return false;
     }
 
-    return tiles[x][y].canWalk;
+    return tiles[y][x].canWalk;
 }
 
 void Map::DrawMapToConsole()
@@ -297,13 +298,13 @@ void Map::DrawMapToConsole()
     {
         for (int x = 0; x < mapWidth; ++x)
         {
-            if (tiles[x][y].tiletexture.id < 10)
+            if (tiles[y][x].tiletexture.id < 10)
             {
-                cout << tiles[x][y].tiletexture.id << "" << ",";
+                cout << tiles[y][x].tiletexture.id << "" << ",";
             }
             else
             {
-                cout << tiles[x][y].tiletexture.id << ",";
+                cout << tiles[y][x].tiletexture.id << ",";
             }
         }
         cout << endl;

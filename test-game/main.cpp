@@ -11,7 +11,7 @@ int MainLoop(Game& game)
   	game.map.tileSetLocation = "../../test-game/Assets/tiles/test-tileset.tsx";
   	game.map.tileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/World1.tmx";
   	game.map.LoadTileMap();
-	
+
 
 	//Set up Player
 	game.player.SpriteSheet = "../../test-game/Assets/animations/boy-sprite-sheet.png";

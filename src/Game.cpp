@@ -3,6 +3,7 @@
 #include <functional>
 #include <raymath.h>
 
+
 using namespace std;
 
 Game::Game()
@@ -17,15 +18,16 @@ Game::~Game() {}
 
 void Game::StartGame(std::function<int()> mainLoop)
 {
-	//Main game starting point
+	// Main game starting point
 
-	//Set up window
-	InitWindow(GetScreenHeight(), GetScreenWidth(), "LibRPG (dev) Game");
-	ToggleFullscreen();
-	SetConfigFlags(FLAG_VSYNC_HINT); //Enable VSYNC
-	SetTraceLogLevel(LOG_WARNING); //Print less to console
+	// Set up window
+	InitWindow(GetScreenHeight() / 2, GetScreenWidth() /2 , "LibRPG (dev) Game");
+	//ToggleFullscreen();
+	SetConfigFlags(FLAG_VSYNC_HINT); // Enable VSYNC
+	SetTraceLogLevel(LOG_WARNING);	 // Print less to console
+	//SetTargetFPS(60);
 
-	//Camera
+	// Camera
 	Camera2D camera = {0};
 	camera.target = player.position;
 	camera.offset = {static_cast<float>(GetScreenWidth()) / 2,
@@ -35,20 +37,22 @@ void Game::StartGame(std::function<int()> mainLoop)
 
 	while (!WindowShouldClose())
 	{
-		//Begin drawing
-		BeginDrawing();
-		ClearBackground(RAYWHITE); //Clear the screen to stop overlap
+		float deltaTime = GetFrameTime();
 
-		//Camera
+		// Begin drawing
+		BeginDrawing();
+		ClearBackground(RAYWHITE); // Clear the screen to stop overlap
+
+		// Camera
 		camera.target = player.position;
-		camera.offset = {static_cast<float>(GetScreenWidth()) / 2, static_cast<float>(GetScreenHeight() ) / 2};
+		camera.offset = {static_cast<float>(GetScreenWidth()) / 2, static_cast<float>(GetScreenHeight()) / 2};
 		camera.rotation = Game::player.cameraRotation;
 		camera.zoom = Game::player.cameraZoom;
 		BeginMode2D(camera);
 
-		//Do the users logic
+		// Do the users logic
 		int mainLoopReturn = mainLoop();
-
+		//map.UnloadTextures();
 
 		EndMode2D();
 

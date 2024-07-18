@@ -29,6 +29,7 @@ private:
     void LoadTextures(const list<string>& paths, vector<Texture2D>& tileTextures);
     list<TileTextureInfo> LoadTilesetXml(const string& filePath);
     bool LoadTileMapAttributes(const string& filePath);
+    bool areTexturesLoaded = false;
     void ParseAndRenderTiles();
     vector<TileTextureInfo> LoadTileTextures(const list<TileTextureInfo>& paths);
     std::vector<TileTextureInfo> tileTextures;
