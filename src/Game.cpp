@@ -8,10 +8,10 @@ using namespace std;
 
 Game::Game()
 {
-	// Constructer
+  // Constructer
 
-	// Set up game
-	Game::player = Player();
+  // Set up game
+  Game::player = Player();
 }
 
 Game::~Game() {}
@@ -21,8 +21,8 @@ void Game::StartGame(std::function<int()> mainLoop)
 	// Main game starting point
 
 	// Set up window
-	InitWindow(GetScreenHeight() / 2, GetScreenWidth() /2 , "LibRPG (dev) Game");
-	//ToggleFullscreen();
+	InitWindow(GetScreenHeight(), GetScreenWidth(), "LibRPG (dev) Game");
+	ToggleFullscreen();
 	SetConfigFlags(FLAG_VSYNC_HINT); // Enable VSYNC
 	SetTraceLogLevel(LOG_WARNING);	 // Print less to console
 	//SetTargetFPS(60);
@@ -62,6 +62,8 @@ void Game::StartGame(std::function<int()> mainLoop)
 
 		EndDrawing();
 	}
+
+	cout << map.IsTileWalkable(20,20) << endl;
 
 	map.UnloadTileTextures();
 	player.UnloadTexture();
