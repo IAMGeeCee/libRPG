@@ -20,6 +20,7 @@ int getChildCount(rapidxml::xml_node<> *n)
     return count;
 }
 
+
 // Split string by delimiter
 std::list<std::string> split(const std::string &s, char delimiter)
 {
