@@ -86,7 +86,7 @@ void Player::DrawPlayer()
 
 void Player::AnimatePlayerWalking()
 {
-    static float frameDelay = 0.07f; // Adjust this value to control the speed
+    static float frameDelay = 0.1f; // Adjust this value to control the speed
     static float timeSinceLastFrame = 0.0f;
 
     timeSinceLastFrame += GetFrameTime(); // deltaTime is the time elapsed since the last frame

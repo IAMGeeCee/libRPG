@@ -5,44 +5,44 @@
 
 class Player {
 public:
-    Vector2 position = {20, 20};
-    Vector2 size = {64, 64};
-    Color color = WHITE;
-    const char *SpriteSheet; // Sprite sheet file path
-    int spriteSheetRows = 1;
-    int spriteSheetColumns = 3;
-    int walkingSpeed = 4;
-    int sprintSpeed = 8;
-    bool canSprint = true;
-    bool isAnimatedOnMove = true;
-    float cameraZoom = 2.0f;
-    float cameraRotation = 0.0f;
-    
+	Vector2 position = { 20, 20 };
+	Vector2 size = { 64, 64 };
+	Color color = WHITE;
+	const char* SpriteSheet; // Sprite sheet file path
+	int spriteSheetRows = 1;
+	int spriteSheetColumns = 3;
+	int walkingSpeed = 4;
+	int sprintSpeed = 8;
+	bool canSprint = true;
+	bool isAnimatedOnMove = true;
+	float cameraZoom = 2.0f;
+	float cameraRotation = 0.0f;
 
-    KeyboardKey forwardKey = KEY_W;
-    KeyboardKey backwardKey = KEY_S;
-    KeyboardKey leftKey = KEY_A;
-    KeyboardKey rightKey = KEY_D;
-    KeyboardKey sprintKey = KEY_LEFT_CONTROL;
 
-    Texture2D PlayerTexture; // Player texture
+	KeyboardKey forwardKey = KEY_W;
+	KeyboardKey backwardKey = KEY_S;
+	KeyboardKey leftKey = KEY_A;
+	KeyboardKey rightKey = KEY_D;
+	KeyboardKey sprintKey = KEY_LEFT_CONTROL;
 
-    void DrawPlayer();
-    void AnimatePlayerWalking();
-    void AnimatePlayerWalkingForward();
-    void AnimatePlayerWalkingBackward();
-    void AnimatePlayerWalkingLeft();
-    void AnimatePlayerWalkingRight();
-    void UnloadTexture();
+	Texture2D PlayerTexture; // Player texture
+
+	void DrawPlayer();
+	void AnimatePlayerWalking();
+	void AnimatePlayerWalkingForward();
+	void AnimatePlayerWalkingBackward();
+	void AnimatePlayerWalkingLeft();
+	void AnimatePlayerWalkingRight();
+	void UnloadTexture();
 
 private:
- 	int CurrentFrame = 1;
-    Rectangle spriteFrameSource; // Source rectangle for sprite frame
+	int CurrentFrame = 1;
+	Rectangle spriteFrameSource; // Source rectangle for sprite frame
 	bool isMoving = false;
-    Rectangle hitBox;
-    bool isTextureLoaded = false;
+	Rectangle hitBox = { position.x, position.y + (size.y - 2), size.x, 2 };
+	bool isTextureLoaded = false;
 
-    void MoveHitbox(KeyboardKey Direction, int currentSpeed );
+	void MoveHitbox(KeyboardKey Direction, int currentSpeed);
 };
 
 #endif // PLAYER_H

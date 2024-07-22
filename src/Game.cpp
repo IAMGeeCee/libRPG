@@ -8,10 +8,11 @@ using namespace std;
 
 Game::Game()
 {
-  // Constructer
+	// Constructer
+	deltaTime = GetFrameTime();
 
-  // Set up game
-  Game::player = Player();
+	// Set up game
+	Game::player = Player();
 }
 
 Game::~Game() {}
@@ -19,25 +20,25 @@ Game::~Game() {}
 void Game::StartGame(std::function<int()> mainLoop)
 {
 	// Main game starting point
+	deltaTime = GetFrameTime();
 
 	// Set up window
-	InitWindow(GetScreenHeight(), GetScreenWidth(), "LibRPG (dev) Game");
-	ToggleFullscreen();
-	SetConfigFlags(FLAG_VSYNC_HINT); // Enable VSYNC
+	InitWindow(1000, 1000, "LibRPG (dev) Game");
+
 	SetTraceLogLevel(LOG_WARNING);	 // Print less to console
-	//SetTargetFPS(60);
 
 	// Camera
-	Camera2D camera = {0};
+	Camera2D camera = { 0 };
 	camera.target = player.position;
-	camera.offset = {static_cast<float>(GetScreenWidth()) / 2,
-					 static_cast<float>(GetScreenHeight() / 2)};
+	camera.offset = { static_cast<float>(GetScreenWidth()) / 2,
+					 static_cast<float>(GetScreenHeight() / 2) };
 	camera.rotation = 0.0f;
 	camera.zoom = Game::player.cameraZoom;
 
 	while (!WindowShouldClose())
 	{
 		float deltaTime = GetFrameTime();
+		DetectKeys();
 
 		// Begin drawing
 		BeginDrawing();
@@ -45,7 +46,7 @@ void Game::StartGame(std::function<int()> mainLoop)
 
 		// Camera
 		camera.target = player.position;
-		camera.offset = {static_cast<float>(GetScreenWidth()) / 2, static_cast<float>(GetScreenHeight()) / 2};
+		camera.offset = { static_cast<float>(GetScreenWidth()) / 2, static_cast<float>(GetScreenHeight()) / 2 };
 		camera.rotation = Game::player.cameraRotation;
 		camera.zoom = Game::player.cameraZoom;
 		BeginMode2D(camera);
@@ -63,12 +64,24 @@ void Game::StartGame(std::function<int()> mainLoop)
 		EndDrawing();
 	}
 
-	cout << map.IsTileWalkable(20,20) << endl;
+	CloseGame();
 
+	// Deconstructer happens at this point
+}
+
+void Game::DetectKeys() {
+	if (IsKeyPressed(KEY_F11)) {
+		ToggleBorderlessWindowed();
+	}
+
+	if (IsKeyPressed(KEY_ESCAPE)) {
+		CloseGame();
+	}
+}
+
+void Game::CloseGame() {
 	map.UnloadTileTextures();
 	player.UnloadTexture();
 	// Game ended
 	CloseWindow();
-
-	// Deconstructer happens at this point
 }

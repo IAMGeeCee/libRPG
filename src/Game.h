@@ -11,8 +11,11 @@ public:
 	Game();
 	~Game();
 	void StartGame(std::function<int()> mainLoop);
+	void CloseGame();
 	Player player;
   	Map map;  
 private:
-	float deltaTime;
+	float deltaTime = GetFrameTime();
+	void DetectKeys();
+	bool shouldClose = false;
 };
