@@ -8,23 +8,23 @@ int MainLoop(Game& game)
 {
 	
 	// Set up Map
-  	game.map.tileSetLocation = "../../test-game/Assets/tiles/test-tileset.tsx";
-  	game.map.tileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/World1.tmx";
-  	game.map.LoadTileMap();
+  	game.Map.tileSetLocation = "../../test-game/Assets/tiles/test-tileset.tsx";
+  	game.Map.tileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/World1.tmx";
+  	game.Map.LoadTileMap();
 
 
 	//Set up Player
-	game.player.SpriteSheet = "../../test-game/Assets/animations/boy-sprite-sheet.png";
-	game.player.spriteSheetRows = 4;
-	game.player.spriteSheetColumns = 3;
-	game.player.size = {32,32};
-	game.player.walkingSpeed = 80;
-	game.player.sprintSpeed = 160;
-	game.player.cameraZoom = 4;
-	game.player.canSprint = true;
-	game.player.cameraRotation = 0.0f;
-	game.player.isAnimatedOnMove = true;
-	game.player.DrawPlayer();
+	game.Player.SpriteSheet = "../../test-game/Assets/animations/boy-sprite-sheet.png";
+	game.Player.spriteSheetRows = 4;
+	game.Player.spriteSheetColumns = 3;
+	game.Player.size = {32,32};
+	game.Player.walkingSpeed = 80;
+	game.Player.sprintSpeed = 160;
+	game.Player.cameraZoom = 4;
+	game.Player.canSprint = true;
+	game.Player.cameraRotation = 0.0f;
+	game.Player.isAnimatedOnMove = true;
+	game.Player.DrawPlayer();
 
 	return 0;
 }

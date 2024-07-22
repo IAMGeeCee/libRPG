@@ -1,76 +1,59 @@
 #include "Game.h"
 #include <raylib.h>
-#include <functional>
 #include <raymath.h>
+#include <functional>
 
-using namespace std;
-
-Game::Game()
+Game::Game() // Constructer
 {
-	// Constructer
-	deltaTime = GetFrameTime();
-
 	// Set up game
-	Game::player = Player();
+	Game::Player = Player::Player();
+	Game::Map = Map::Map();
 }
 
-Game::~Game() {}
+Game::~Game() {} // Deconstructer
 
-void Game::StartGame(std::function<int()> mainLoop)
+void Game::StartGame(std::function<int()> mainLoop) // Main game starting point
 {
-	// Main game starting point
-	deltaTime = GetFrameTime();
+	InitWindow(1000, 1000, "LibRPG (dev) Game"); // Set up a window
+	SetTraceLogLevel(LOG_WARNING);				 // Print less to console
 
-	// Set up window
-	InitWindow(1000, 1000, "LibRPG (dev) Game");
-
-	SetTraceLogLevel(LOG_WARNING); // Print less to console
-
-	// Camera
-	Camera2D camera = {0};
-	camera.target = player.position;
-	camera.offset = {static_cast<float>(GetScreenWidth()) / 2,
-					 static_cast<float>(GetScreenHeight() / 2)};
-	camera.rotation = 0.0f;
-	camera.zoom = Game::player.cameraZoom;
+	Camera2D camera = {0}; // Create a Camera
 
 	while (!WindowShouldClose())
 	{
-		deltaTime = GetFrameTime();
+		deltaTime = GetFrameTime(); // Get frame time
 		DetectKeys();
 
-		// Begin drawing
 		BeginDrawing();
 		ClearBackground(RAYWHITE); // Clear the screen to stop overlap
 
 		// Camera
-		camera.target = player.position;
+		camera.target = Player.position;
 		camera.offset = {static_cast<float>(GetScreenWidth()) / 2, static_cast<float>(GetScreenHeight()) / 2};
-		camera.rotation = Game::player.cameraRotation;
-		camera.zoom = Game::player.cameraZoom;
-		BeginMode2D(camera);
+		camera.rotation = Game::Player.cameraRotation;
+		camera.zoom = Game::Player.cameraZoom;
+		
+		Player.map = &Map; // Hand the map to the Player class so it can interact with it
 
-		player.map = &map;
+		BeginMode2D(camera);		
 
-		// Do the users logic
-		int mainLoopReturn = mainLoop();
-		// map.UnloadTextures();
+		int mainLoopReturn = mainLoop(); // Do any of the users logic and drawing
 
 		EndMode2D();
 
+		// TODO: This is where GUI would be drawn
 		// Any gui must not be drawn in a Mode2D otherwise it will move with the camera
+		
 		DrawFPS(50, 50);
-		// DrawText((std::to_string(static_cast<int>(player.position.x) / map.tileWidth) + ',' + std::to_string(static_cast<int>(player.position.y) / map.tileHeight)).c_str(), 50, 100, 25, GREEN);
+		DrawText((std::to_string(static_cast<int>(Player.position.x) / Map.tileWidth) + ',' + std::to_string(static_cast<int>(Player.position.y) / Map.tileHeight)).c_str(), 50, 100, 25, GREEN);
 
 		EndDrawing();
 	}
 
-	CloseGame();
-
-	// Deconstructer happens at this point
+	CloseGame(); // Game has ended
 }
 
-void Game::DetectKeys()
+void Game::DetectKeys() // Detect other key presses
 {
 	if (IsKeyPressed(KEY_F11))
 	{
@@ -83,10 +66,9 @@ void Game::DetectKeys()
 	}
 }
 
-void Game::CloseGame()
+void Game::CloseGame() // Game has ended, bye 👋
 {
-	map.UnloadTileTextures();
-	player.UnloadTexture();
-	// Game ended
+	Map.UnloadTileTextures();
+	Player.UnloadTexture();
 	CloseWindow();
 }
