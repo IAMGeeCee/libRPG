@@ -145,8 +145,6 @@ void Player::MoveHitbox(int Direction, int currentSpeed)
 
         DrawRectangle(hitBox.x, hitBox.y, hitBox.width, hitBox.height, RED);
     }
-
-    
 }
 
 void Player::UnloadTexture()

@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <raylib.h>
+#include <Map.h>
 
 class Player
 {
@@ -28,15 +29,17 @@ public:
 	void AnimatePlayerWalking(); // Animates the player as it walks
 	void UnloadTexture();		 // Unloads the player's texture at the end of the game
 
+	Map * map; // Pointer to the gamees map so that we can do IsTileWalkable()
+
 private:
-	Color color = WHITE;									  // Player colour
-	int CurrentFrame = 1;									  // Current frame of animation (out of the value of spriteSheetColumns)
-	Rectangle spriteFrameSource;							  // Source rectangle for sprite frame
-	bool isMoving = false;									  // Whether the player is currently moving
-	Rectangle hitBox;										  // The player's hitbox
-	bool isTextureLoaded = false;							  // Whether the texture is loaded
-	Texture2D PlayerTexture;								  // Player texture
-	void MoveHitbox(int Direction, int currentSpeed); // Moves the hitbox before moving the player
+	Color color = WHITE;							  // Player colour
+	int CurrentFrame = 1;							  // Current frame of animation (out of the value of spriteSheetColumns)
+	Rectangle spriteFrameSource;					  // Source rectangle for sprite frame
+	bool isMoving = false;							  // Whether the player is currently moving
+	Rectangle hitBox;								  // The player's hitbox
+	bool isTextureLoaded = false;					  // Whether the texture is loaded
+	Texture2D PlayerTexture;						  // Player texture
+	void MoveHitbox(int Direction, int currentSpeed); // Moves the hitbox before moving the playerprotected:
 };
 
 #endif // PLAYER_H

@@ -3,7 +3,6 @@
 #include <functional>
 #include <raymath.h>
 
-
 using namespace std;
 
 Game::Game()
@@ -25,19 +24,19 @@ void Game::StartGame(std::function<int()> mainLoop)
 	// Set up window
 	InitWindow(1000, 1000, "LibRPG (dev) Game");
 
-	SetTraceLogLevel(LOG_WARNING);	 // Print less to console
+	SetTraceLogLevel(LOG_WARNING); // Print less to console
 
 	// Camera
-	Camera2D camera = { 0 };
+	Camera2D camera = {0};
 	camera.target = player.position;
-	camera.offset = { static_cast<float>(GetScreenWidth()) / 2,
-					 static_cast<float>(GetScreenHeight() / 2) };
+	camera.offset = {static_cast<float>(GetScreenWidth()) / 2,
+					 static_cast<float>(GetScreenHeight() / 2)};
 	camera.rotation = 0.0f;
 	camera.zoom = Game::player.cameraZoom;
 
 	while (!WindowShouldClose())
 	{
-		float deltaTime = GetFrameTime();
+		deltaTime = GetFrameTime();
 		DetectKeys();
 
 		// Begin drawing
@@ -46,14 +45,16 @@ void Game::StartGame(std::function<int()> mainLoop)
 
 		// Camera
 		camera.target = player.position;
-		camera.offset = { static_cast<float>(GetScreenWidth()) / 2, static_cast<float>(GetScreenHeight()) / 2 };
+		camera.offset = {static_cast<float>(GetScreenWidth()) / 2, static_cast<float>(GetScreenHeight()) / 2};
 		camera.rotation = Game::player.cameraRotation;
 		camera.zoom = Game::player.cameraZoom;
 		BeginMode2D(camera);
 
+		player.map = &map;
+
 		// Do the users logic
 		int mainLoopReturn = mainLoop();
-		//map.UnloadTextures();
+		// map.UnloadTextures();
 
 		EndMode2D();
 
@@ -69,17 +70,21 @@ void Game::StartGame(std::function<int()> mainLoop)
 	// Deconstructer happens at this point
 }
 
-void Game::DetectKeys() {
-	if (IsKeyPressed(KEY_F11)) {
+void Game::DetectKeys()
+{
+	if (IsKeyPressed(KEY_F11))
+	{
 		ToggleBorderlessWindowed();
 	}
 
-	if (IsKeyPressed(KEY_ESCAPE)) {
+	if (IsKeyPressed(KEY_ESCAPE))
+	{
 		CloseGame();
 	}
 }
 
-void Game::CloseGame() {
+void Game::CloseGame()
+{
 	map.UnloadTileTextures();
 	player.UnloadTexture();
 	// Game ended
