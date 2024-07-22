@@ -5,7 +5,7 @@
 
 class Player {
 public:
-    Vector2 position = {0, 0};
+    Vector2 position = {20, 20};
     Vector2 size = {64, 64};
     Color color = WHITE;
     const char *SpriteSheet; // Sprite sheet file path
