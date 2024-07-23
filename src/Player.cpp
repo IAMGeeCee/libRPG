@@ -121,6 +121,17 @@ void Player::MoveHitbox(int Direction, int CurrentSpeed)
         2};
 
     DrawRectangle(Player::HitBox.x, Player::HitBox.y, Player::HitBox.width, Player::HitBox.height, RED);
+
+
+
+    if (IsKeyDown(KEY_C))
+    {
+        std::cout << "X: " << static_cast<int>(HitBox.x / MapPointer->TileWidth) << ",Y: " << static_cast<int>(HitBox.y / MapPointer->TileHeight) << std::endl;
+    }
+
+    if (!(MapPointer->IsTileWalkable(static_cast<int>(HitBox.x / MapPointer->TileWidth), static_cast<int>(HitBox.y / MapPointer->TileHeight)))){
+        std::cout << "Not walkable tile" << std::endl;
+    }
 }
 
 void Player::UnloadPlayerTexture()

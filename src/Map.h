@@ -35,7 +35,7 @@ private:
     void ParseAndRenderTiles();
     std::vector<TileTextureInfo> LoadTileTextures(const std::list<TileTextureInfo> &paths);
     std::vector<TileTextureInfo> TileTextures;
-    std::vector<std::vector<TileTextureInfo>> Tiles;
+    std::vector<std::vector<int>> Tiles;
 
     int MapWidth = 100;
     int MapHeight = 100;

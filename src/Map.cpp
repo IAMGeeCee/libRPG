@@ -102,19 +102,37 @@ std::list<TileTextureInfo> Map::LoadTilesetXml(const std::string &FilePath)
         auto PropertiesNode = Child->first_node("properties");
         if (PropertiesNode)
         {
+
             auto Property = PropertiesNode->first_node("property");
             if (Property)
             {
                 auto ValueAttr = Property->first_attribute("value");
                 if (ValueAttr)
                 {
-                    TextureInfo.CanWalk = std::string(ValueAttr->value()) == "true";
+                    std::string value = ValueAttr->value();
+
+                    if (value == "true")
+                    {
+                        TextureInfo.CanWalk = true; // Assign directly since you already checked the value
+                    }
+                    else
+                    {
+                        std::cerr << "Property value attribute is not 'true', it is '" << value << "'" << std::endl;
+                    }
                 }
                 else
                 {
                     std::cerr << "Property node missing value attribute" << std::endl;
                 }
             }
+            else
+            {
+                std::cerr << "Properties node missing property child node" << std::endl;
+            }
+        }
+        else
+        {
+            // std::cerr << "Child node missing properties node" << std::endl;
         }
 
         Paths.push_back(TextureInfo);
@@ -212,10 +230,13 @@ void Map::ParseAndRenderTiles()
     int X = 0, Y = 0;
     int TileID;
 
-    Tiles.resize(MapHeight);
-    for (int I = 0; I < MapHeight; ++I)
+    if (Tiles.size() != MapHeight)
     {
-        Tiles[I].resize(MapWidth);
+        Tiles.resize(MapHeight);
+        for (int I = 0; I < MapHeight; ++I)
+        {
+            Tiles[I].resize(MapWidth);
+        }
     }
 
     while (std::getline(Ss, Token, ','))
@@ -225,10 +246,6 @@ void Map::ParseAndRenderTiles()
         { // Assuming 0 means no tile
             // Get the texture for this tile
             Texture2D Texture = TileTextures[TileID - 1].TileTexture;
-
-            // TODO: Get the X an Y to actually be right.
-            TileTextures[TileID - 1].Position.x = X;
-            TileTextures[TileID - 1].Position.y = Y;
 
             // Calculate position to draw the tile
             Vector2 Position = {static_cast<float>(X * TileWidth), static_cast<float>(Y * TileHeight)};
@@ -248,6 +265,8 @@ void Map::ParseAndRenderTiles()
 
             // Draw the tile
             DrawTexturePro(Texture, SourceRect, DestRect, Vector2{0, 0}, 0, WHITE);
+
+            Tiles[X][Y] = TileID - 1;
         }
 
         // Move to the next tile position
@@ -281,7 +300,7 @@ bool Map::IsTileWalkable(int X, int Y)
         return false;
     }
 
-    return Tiles[Y][X].CanWalk;
+    return TileTextures[Tiles[X][Y]].CanWalk;
 }
 
 void Map::DrawMapToConsole()
@@ -290,14 +309,7 @@ void Map::DrawMapToConsole()
     {
         for (int X = 0; X < MapWidth; ++X)
         {
-            if (Tiles[Y][X].TileTexture.id < 10)
-            {
-                std::cout << Tiles[Y][X].TileTexture.id << "" << ",";
-            }
-            else
-            {
-                std::cout << Tiles[Y][X].TileTexture.id << ",";
-            }
+            std::cout << Tiles[X][Y] << ",";
         }
         std::cout << std::endl;
     }
@@ -312,4 +324,11 @@ void Map::DrawMapToConsole()
     std::cout << "Set Location: " << Map::TileSetLocation << std::endl;
     std::cout << "Number of Tiles: " << Map::Tiles.size() * Map::Tiles[1].size() << std::endl;
     std::cout << "Number of Textures: " << Map::TileTextures.size() << std::endl;
+
+    std::cout << std::endl
+              << "Tileset Info" << std::endl;
+    for (int I = 0; I < TileTextures.size(); ++I)
+    {
+        std::cout << I << ": " << TileTextures[I].CanWalk << ", " << TileTextures[I].Path << std::endl;
+    }
 }
