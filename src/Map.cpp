@@ -9,177 +9,168 @@
 #include <raylib.h>
 #include <vector>
 
-// Count child nodes of an XML node
-int getChildCount(rapidxml::xml_node<> *n)
+int GetChildCount(rapidxml::xml_node<> *Node) // Count child nodes of an XML node
 {
-    int count = 0;
-    for (rapidxml::xml_node<> *child = n->first_node(); child != nullptr; child = child->next_sibling())
+    int Count = 0;
+    for (rapidxml::xml_node<> *Child = Node->first_node(); Child != nullptr; Child = Child->next_sibling())
     {
-        count++;
+        Count++;
     }
-    return count;
+    return Count;
 }
 
-
-// Split string by delimiter
-std::list<std::string> split(const std::string &s, char delimiter)
+std::list<std::string> Split(const std::string &String, char Delimiter) // Split string by delimiter
 {
-    std::list<std::string> tokens;
-    std::string token;
-    std::istringstream tokenStream(s);
-    while (std::getline(tokenStream, token, delimiter))
+    std::list<std::string> Tokens;
+    std::string Token;
+    std::istringstream TokenStream(String);
+    while (std::getline(TokenStream, Token, Delimiter))
     {
-        tokens.push_back(token);
+        Tokens.push_back(Token);
     }
-    return tokens;
+    return Tokens;
 }
 
 void Map::LoadTileMap()
 {
-    // Load tileset XML and get texture paths
-    std::list<TileTextureInfo> texturePaths = LoadTilesetXml(tileSetLocation);
-    if (texturePaths.empty())
+    std::list<TileTextureInfo> TexturePaths = LoadTilesetXml(TileSetLocation); // Load tileset XML and get texture paths
+    if (TexturePaths.empty())
     {
         std::cerr << "Failed to load texture paths from tileset XML" << std::endl;
         return;
     }
 
-    if (!areTexturesLoaded)
+    if (!AreTexturesLoaded) // Textures are not loaded
     {
-        // Load tile textures
-        Map::tileTextures = LoadTileTextures(texturePaths);
-        areTexturesLoaded = true;
+        Map::TileTextures = LoadTileTextures(TexturePaths); // Load tile textures
+        AreTexturesLoaded = true;
     }
-    // Load tilemap XML and get map attributes
-    if (!LoadTileMapAttributes(tileMapLocation))
+
+    if (!LoadTileMapAttributes(TileMapLocation)) // Load tilemap XML and get map attributes and report the error to the terminal if it fails
     {
         std::cerr << "Failed to load tile map attributes" << std::endl;
         return;
     }
 
-    // Parse CSV data and render tiles
-    ParseAndRenderTiles();
+    ParseAndRenderTiles(); // Parse CSV data and render tiles
 }
 
-list<TileTextureInfo> Map::LoadTilesetXml(const string &filePath)
+std::list<TileTextureInfo> Map::LoadTilesetXml(const std::string &FilePath)
 {
     rapidxml::xml_document<> TilesetXml;
-    std::ifstream file(filePath);
-    if (!file.is_open())
+    std::ifstream File(FilePath);
+    if (!File.is_open())
     {
-        std::cerr << "Can't read XML file: " << filePath << std::endl;
+        std::cerr << "Can't read XML file: " << FilePath << std::endl;
         return {};
     }
 
-    std::stringstream buffer;
-    buffer << file.rdbuf();
-    std::string fileContents = buffer.str();
-    file.close();
-    TilesetXml.parse<0>(&fileContents[0]);
+    std::stringstream Buffer;
+    Buffer << File.rdbuf();
+    std::string FileContents = Buffer.str();
+    File.close();
+    TilesetXml.parse<0>(&FileContents[0]);
 
-    std::list<TileTextureInfo> paths;
-    rapidxml::xml_node<> *tilesetNode = TilesetXml.first_node();
-    if (!tilesetNode)
+    std::list<TileTextureInfo> Paths;
+    rapidxml::xml_node<> *TilesetNode = TilesetXml.first_node();
+    if (!TilesetNode)
     {
         std::cerr << "Invalid Tileset XML format" << std::endl;
         return {};
     }
 
-    for (rapidxml::xml_node<> *child = tilesetNode->first_node("tile"); child != nullptr; child = child->next_sibling("tile"))
+    for (rapidxml::xml_node<> *Child = TilesetNode->first_node("tile"); Child != nullptr; Child = Child->next_sibling("tile"))
     {
-        if (child->first_node("image"))
+        auto ImageNode = Child->first_node("image");
+        if (!ImageNode)
         {
-            auto sourceAttr = child->first_node("image")->first_attribute("source");
-            if (sourceAttr)
-            {
-                TileTextureInfo textureInfo;
+            std::cerr << "Tile node missing image node" << std::endl;
+            continue;
+        }
 
-                auto propertiesNode = child->first_node("properties");
-                if (propertiesNode != 0)
+        auto SourceAttr = ImageNode->first_attribute("source");
+        if (!SourceAttr)
+        {
+            std::cerr << "Image node missing source attribute" << std::endl;
+            continue;
+        }
+
+        TileTextureInfo TextureInfo;
+        TextureInfo.Path = SourceAttr->value();
+        TextureInfo.CanWalk = false; // Default value
+
+        auto PropertiesNode = Child->first_node("properties");
+        if (PropertiesNode)
+        {
+            auto Property = PropertiesNode->first_node("property");
+            if (Property)
+            {
+                auto ValueAttr = Property->first_attribute("value");
+                if (ValueAttr)
                 {
-                    auto property = propertiesNode->first_node("property");
-                    if (property != 0)
-                    {
-                        if (property->first_attribute("value")->value())
-                        {
-                            textureInfo.canWalk = true;
-                        }
-                        else
-                        {
-                            textureInfo.canWalk = false;
-                        }
-                    }
-                    else
-                    {
-                        textureInfo.canWalk = false;
-                    }
+                    TextureInfo.CanWalk = std::string(ValueAttr->value()) == "true";
                 }
                 else
                 {
-                    textureInfo.canWalk = false;
+                    std::cerr << "Property node missing value attribute" << std::endl;
                 }
-
-                textureInfo.path = sourceAttr->value();
-                paths.push_back(textureInfo);
-            }
-            else
-            {
-                std::cerr << "Tile node missing source attribute" << std::endl;
             }
         }
+
+        Paths.push_back(TextureInfo);
     }
 
-    return paths;
+    return Paths;
 }
 
-std::vector<TileTextureInfo> Map::LoadTileTextures(const std::list<TileTextureInfo> &paths)
+std::vector<TileTextureInfo> Map::LoadTileTextures(const std::list<TileTextureInfo> &Paths)
 {
-    std::vector<TileTextureInfo> textures;
-    for (const auto &path : paths)
+    std::vector<TileTextureInfo> Textures;
+    for (const auto &Path : Paths)
     {
-        TileTextureInfo texture;
-        texture.canWalk = path.canWalk;
-        texture.path = path.path;
-        texture.position.x = path.position.x; // Assign the X position
-        texture.position.y = path.position.y; // Assign the Y position
-        texture.tiletexture = LoadTexture(path.path.c_str());
-        textures.push_back(texture);
+        TileTextureInfo Texture;
+        Texture.CanWalk = Path.CanWalk;
+        Texture.Path = Path.Path;
+        Texture.Position.x = Path.Position.x; // Assign the X position
+        Texture.Position.y = Path.Position.y; // Assign the Y position
+        Texture.TileTexture = LoadTexture(Path.Path.c_str());
+        Textures.push_back(Texture);
     }
-    return textures;
+    return Textures;
 }
 
-bool Map::LoadTileMapAttributes(const std::string &filePath)
+bool Map::LoadTileMapAttributes(const std::string &FilePath)
 {
     rapidxml::xml_document<> TileMapXml;
-    std::ifstream file(filePath);
-    if (!file.is_open())
+    std::ifstream File(FilePath);
+    if (!File.is_open())
     {
-        std::cerr << "Can't read XML file: " << filePath << std::endl;
+        std::cerr << "Can't read XML file: " << FilePath << std::endl;
         return false;
     }
 
-    std::stringstream buffer;
-    buffer << file.rdbuf();
-    std::string fileContents = buffer.str();
-    file.close();
-    TileMapXml.parse<0>(&fileContents[0]);
+    std::stringstream Buffer;
+    Buffer << File.rdbuf();
+    std::string FileContents = Buffer.str();
+    File.close();
+    TileMapXml.parse<0>(&FileContents[0]);
 
-    rapidxml::xml_node<> *firstNode = TileMapXml.first_node();
-    if (!firstNode)
+    rapidxml::xml_node<> *FirstNode = TileMapXml.first_node();
+    if (!FirstNode)
     {
         std::cerr << "Invalid TileMap XML format" << std::endl;
         return false;
     }
 
-    auto layerNode = firstNode->first_node("layer");
-    if (!layerNode || !layerNode->first_attribute("width") || !layerNode->first_attribute("height"))
+    auto LayerNode = FirstNode->first_node("layer");
+    if (!LayerNode || !LayerNode->first_attribute("width") || !LayerNode->first_attribute("height"))
     {
         std::cerr << "Missing map layer attributes" << std::endl;
         return false;
     }
 
-    mapWidth = std::stoi(layerNode->first_attribute("width")->value());
-    mapHeight = std::stoi(layerNode->first_attribute("height")->value());
+    MapWidth = std::stoi(LayerNode->first_attribute("width")->value());
+    MapHeight = std::stoi(LayerNode->first_attribute("height")->value());
 
     return true;
 }
@@ -187,138 +178,138 @@ bool Map::LoadTileMapAttributes(const std::string &filePath)
 void Map::ParseAndRenderTiles()
 {
     rapidxml::xml_document<> TileMapXml;
-    std::ifstream file(tileMapLocation);
-    if (!file.is_open())
+    std::ifstream File(TileMapLocation);
+    if (!File.is_open())
     {
-        std::cerr << "Can't read XML file: " << tileMapLocation << std::endl;
+        std::cerr << "Can't read XML file: " << TileMapLocation << std::endl;
         return;
     }
 
-    std::stringstream buffer;
-    buffer << file.rdbuf();
-    std::string fileContents = buffer.str();
-    file.close();
-    TileMapXml.parse<0>(&fileContents[0]);
+    std::stringstream Buffer;
+    Buffer << File.rdbuf();
+    std::string FileContents = Buffer.str();
+    File.close();
+    TileMapXml.parse<0>(&FileContents[0]);
 
-    rapidxml::xml_node<> *firstNode = TileMapXml.first_node("map");
+    rapidxml::xml_node<> *FirstNode = TileMapXml.first_node("map");
 
-    mapHeight = std::stoi(firstNode->first_attribute("height")->value());
-    mapWidth = std::stoi(firstNode->first_attribute("width")->value());
-    tileHeight = std::stoi(firstNode->first_attribute("tileheight")->value());
-    tileWidth = std::stoi(firstNode->first_attribute("tilewidth")->value());
+    MapHeight = std::stoi(FirstNode->first_attribute("height")->value());
+    MapWidth = std::stoi(FirstNode->first_attribute("width")->value());
+    TileHeight = std::stoi(FirstNode->first_attribute("tileheight")->value());
+    TileWidth = std::stoi(FirstNode->first_attribute("tilewidth")->value());
 
-    auto layerNode = firstNode->first_node("layer");
-    auto layerDataNode = layerNode->first_node("data");
-    if (!layerDataNode || !layerDataNode->value())
+    auto LayerNode = FirstNode->first_node("layer");
+    auto LayerDataNode = LayerNode->first_node("data");
+    if (!LayerDataNode || !LayerDataNode->value())
     {
         std::cerr << "Could not read tilemap data" << std::endl;
         return;
     }
 
-    std::string csvData = layerDataNode->value();
-    std::stringstream ss(csvData);
-    std::string token;
-    int x = 0, y = 0;
-    int tileID;
+    std::string CsvData = LayerDataNode->value();
+    std::stringstream Ss(CsvData);
+    std::string Token;
+    int X = 0, Y = 0;
+    int TileID;
 
-    tiles.resize(mapHeight);
-    for (int i = 0; i < mapHeight; ++i)
+    Tiles.resize(MapHeight);
+    for (int I = 0; I < MapHeight; ++I)
     {
-        tiles[i].resize(mapWidth);
+        Tiles[I].resize(MapWidth);
     }
 
-    while (std::getline(ss, token, ','))
+    while (std::getline(Ss, Token, ','))
     {
-        tileID = std::stoi(token);
-        if (tileID != 0)
+        TileID = std::stoi(Token);
+        if (TileID != 0)
         { // Assuming 0 means no tile
             // Get the texture for this tile
-            Texture2D texture = tileTextures[tileID - 1].tiletexture;
+            Texture2D Texture = TileTextures[TileID - 1].TileTexture;
 
             // TODO: Get the X an Y to actually be right.
-            tileTextures[tileID - 1].position.x = x;
-            tileTextures[tileID - 1].position.y = y;
+            TileTextures[TileID - 1].Position.x = X;
+            TileTextures[TileID - 1].Position.y = Y;
 
             // Calculate position to draw the tile
-            Vector2 position = {static_cast<float>(x * tileWidth), static_cast<float>(y * tileHeight)};
+            Vector2 Position = {static_cast<float>(X * TileWidth), static_cast<float>(Y * TileHeight)};
 
             // Define source and destination rectangles
-            Rectangle sourceRect = {0, 0, static_cast<float>(texture.width), static_cast<float>(texture.height)};
-            Rectangle destRect = {position.x, position.y, static_cast<float>(tileWidth), static_cast<float>(tileHeight)};
+            Rectangle SourceRect = {0, 0, static_cast<float>(Texture.width), static_cast<float>(Texture.height)};
+            Rectangle DestRect = {Position.x, Position.y, static_cast<float>(TileWidth), static_cast<float>(TileHeight)};
 
             // If tile width or height is greater than the texture's width or height, scale it
-            if (tileWidth > texture.width || tileHeight > texture.height)
+            if (TileWidth > Texture.width || TileHeight > Texture.height)
             {
-                float scaleX = static_cast<float>(tileWidth) / static_cast<float>(texture.width);
-                float scaleY = static_cast<float>(tileHeight) / static_cast<float>(texture.height);
-                destRect.width *= scaleX;
-                destRect.height *= scaleY;
+                float ScaleX = static_cast<float>(TileWidth) / static_cast<float>(Texture.width);
+                float ScaleY = static_cast<float>(TileHeight) / static_cast<float>(Texture.height);
+                DestRect.width *= ScaleX;
+                DestRect.height *= ScaleY;
             }
 
             // Draw the tile
-            DrawTexturePro(texture, sourceRect, destRect, Vector2{0, 0}, 0, WHITE);
+            DrawTexturePro(Texture, SourceRect, DestRect, Vector2{0, 0}, 0, WHITE);
         }
 
         // Move to the next tile position
 
-        x++;
-        if (x >= mapWidth)
+        X++;
+        if (X >= MapWidth)
         {
-            x = 0;
-            y++;
+            X = 0;
+            Y++;
         }
     }
 }
 
 void Map::UnloadTileTextures()
 {
-    for (auto &texture : tileTextures)
+    for (auto &Texture : TileTextures)
     {
-        UnloadTexture(texture.tiletexture);
+        UnloadTexture(Texture.TileTexture);
     }
 
-    tileTextures.clear(); // Clear the vector after unloading
+    TileTextures.clear(); // Clear the vector after unloading
 
-    areTexturesLoaded = false;
+    AreTexturesLoaded = false;
 }
 
-bool Map::IsTileWalkable(int x, int y)
+bool Map::IsTileWalkable(int X, int Y)
 {
-    if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight)
+    if (X < 0 || X >= MapWidth || Y < 0 || Y >= MapHeight)
     {
         // Out of bounds
         return false;
     }
 
-    return tiles[y][x].canWalk;
+    return Tiles[Y][X].CanWalk;
 }
 
 void Map::DrawMapToConsole()
 {
-    for (int y = 0; y < mapHeight; ++y)
+    for (int Y = 0; Y < MapHeight; ++Y)
     {
-        for (int x = 0; x < mapWidth; ++x)
+        for (int X = 0; X < MapWidth; ++X)
         {
-            if (tiles[y][x].tiletexture.id < 10)
+            if (Tiles[Y][X].TileTexture.id < 10)
             {
-                cout << tiles[y][x].tiletexture.id << "" << ",";
+                std::cout << Tiles[Y][X].TileTexture.id << "" << ",";
             }
             else
             {
-                cout << tiles[y][x].tiletexture.id << ",";
+                std::cout << Tiles[Y][X].TileTexture.id << ",";
             }
         }
-        cout << endl;
+        std::cout << std::endl;
     }
-    cout << endl
-         << "DEBUG INFO" << endl;
-    cout << endl
-         << "Map Width: " << Map::mapWidth << endl;
-    cout << "Map Height: " << Map::mapHeight << endl;
-    cout << "Tile Height: " << Map::tileHeight << endl;
-    cout << "Tile Width: " << Map::tileWidth << endl;
-    cout << "Map location: " << Map::tileMapLocation << endl;
-    cout << "Set location: " << Map::tileSetLocation << endl;
-    cout << "Number of tiles: " << Map::tiles.size() * Map::tiles[1].size() << endl;
-    cout << "Number of textures: " << Map::tileTextures.size() << endl;
+    std::cout << std::endl
+              << "DEBUG INFO" << std::endl;
+    std::cout << std::endl
+              << "Map Width: " << Map::MapWidth << std::endl;
+    std::cout << "Map Height: " << Map::MapHeight << std::endl;
+    std::cout << "Tile Height: " << Map::TileHeight << std::endl;
+    std::cout << "Tile Width: " << Map::TileWidth << std::endl;
+    std::cout << "Map Location: " << Map::TileMapLocation << std::endl;
+    std::cout << "Set Location: " << Map::TileSetLocation << std::endl;
+    std::cout << "Number of Tiles: " << Map::Tiles.size() * Map::Tiles[1].size() << std::endl;
+    std::cout << "Number of Textures: " << Map::TileTextures.size() << std::endl;
 }

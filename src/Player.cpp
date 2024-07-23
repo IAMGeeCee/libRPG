@@ -4,152 +4,128 @@
 #include <chrono>
 #include <thread>
 
-using namespace std;
-
-int currentFrameNumber = 1;
-
 void Player::DrawPlayer()
 {
-
-    if (!isTextureLoaded)
+    if (!IsTextureLoaded) // Load the texture if it isn't already loaded
     {
         PlayerTexture = LoadTexture(Player::SpriteSheet);
-        spriteFrameSource = {size.y * currentFrameNumber, 0.0f, static_cast<float>(PlayerTexture.width / spriteSheetColumns), static_cast<float>(PlayerTexture.height / spriteSheetRows)};
-        isTextureLoaded = true;
-        cout << "Loaded player texture" << endl;
+        SpriteFrameSource = {Size.y * Player::CurrentFrame, 0.0f, static_cast<float>(PlayerTexture.width / SpriteSheetColumns), static_cast<float>(PlayerTexture.height / SpriteSheetRows)};
+        IsTextureLoaded = true;
+        std::cout << "Loaded player texture" << std::endl;
     }
 
-    int currentSpeed = walkingSpeed;
-    isMoving = false;
+    IsMoving = false;
 
-    if (IsKeyDown(sprintKey) && canSprint)
+    int CurrentSpeed = WalkingSpeed;
+    if (IsKeyDown(SprintKey) && CanSprint) // Set player's speed
     {
-        currentSpeed = sprintSpeed;
+        CurrentSpeed = SprintSpeed;
     }
 
-    if (IsKeyDown(forwardKey))
+    if (IsKeyDown(ForwardKey))
     {
-        position.y -= currentSpeed * GetFrameTime();
-        isMoving = true;
-        if (isAnimatedOnMove)
+        Position.y -= CurrentSpeed * GetFrameTime();
+        IsMoving = true;
+        if (IsAnimatedOnMove)
         {
-            spriteFrameSource.y = size.y * 3;
+            SpriteFrameSource.y = Size.y * 3;
         }
-        Player::MoveHitbox(forwardKey, currentSpeed);
+        Player::MoveHitbox(ForwardKey, CurrentSpeed);
     }
-    if (IsKeyDown(leftKey))
+    if (IsKeyDown(LeftKey))
     {
-        position.x -= currentSpeed * GetFrameTime();
-        isMoving = true;
-        if (isAnimatedOnMove)
+        Position.x -= CurrentSpeed * GetFrameTime();
+        IsMoving = true;
+        if (IsAnimatedOnMove)
         {
-            spriteFrameSource.y = size.y * 1;
+            SpriteFrameSource.y = Size.y * 1;
         }
-        Player::MoveHitbox(leftKey, currentSpeed);
+        Player::MoveHitbox(LeftKey, CurrentSpeed);
     }
-    if (IsKeyDown(backwardKey))
+    if (IsKeyDown(BackwardKey))
     {
-        position.y += currentSpeed * GetFrameTime();
-        isMoving = true;
-        if (isAnimatedOnMove)
+        Position.y += CurrentSpeed * GetFrameTime();
+        IsMoving = true;
+        if (IsAnimatedOnMove)
         {
-            spriteFrameSource.y = 0;
+            SpriteFrameSource.y = 0;
         }
-        Player::MoveHitbox(backwardKey, currentSpeed);
+        Player::MoveHitbox(BackwardKey, CurrentSpeed);
     }
-    if (IsKeyDown(rightKey))
+    if (IsKeyDown(RightKey))
     {
-        position.x += currentSpeed * GetFrameTime();
-        isMoving = true;
-        if (isAnimatedOnMove)
+        Position.x += CurrentSpeed * GetFrameTime();
+        IsMoving = true;
+        if (IsAnimatedOnMove)
         {
-            spriteFrameSource.y = size.y * 2;
+            SpriteFrameSource.y = Size.y * 2;
         }
-        Player::MoveHitbox(rightKey, currentSpeed);
+        Player::MoveHitbox(RightKey, CurrentSpeed);
     }
 
-    Rectangle destRect = {
-        position.x,
-        position.y,
-        size.x,
-        size.y};
+    Rectangle DestRect = {Position.x, Position.y, Size.x, Size.y};
 
-    if (isMoving)
+    if (IsMoving)
     {
         AnimatePlayerWalking();
     }
 
-    DrawTexturePro(PlayerTexture, spriteFrameSource, destRect, {0, 0}, 0.0f, WHITE);
+    DrawTexturePro(PlayerTexture, SpriteFrameSource, DestRect, {0, 0}, 0.0f, WHITE);
 }
 
 void Player::AnimatePlayerWalking()
 {
-    static float frameDelay = 0.1f; // Adjust this value to control the speed
-    static float timeSinceLastFrame = 0.0f;
+    static float FrameDelay = 0.1f; // Animation speed
+    static float TimeSinceLastFrame = 0.0f;
 
-    timeSinceLastFrame += GetFrameTime(); // deltaTime is the time elapsed since the last frame
+    TimeSinceLastFrame += GetFrameTime(); // Get deltaTime which is the time elapsed since the last frame
 
-    if (timeSinceLastFrame >= frameDelay)
+    if (TimeSinceLastFrame >= FrameDelay)
     {
-        timeSinceLastFrame = 0.0f;
+        TimeSinceLastFrame = 0.0f;
 
-        spriteFrameSource.x = static_cast<float>(CurrentFrame * size.x);
+        SpriteFrameSource.x = static_cast<float>(CurrentFrame * Size.x);
         CurrentFrame++;
-        if (CurrentFrame == spriteSheetColumns + 1)
+        if (CurrentFrame == SpriteSheetColumns + 1)
         {
             CurrentFrame = 1;
         }
-        currentFrameNumber = CurrentFrame;
     }
 }
 
-void Player::MoveHitbox(int Direction, int currentSpeed)
+void Player::MoveHitbox(int Direction, int CurrentSpeed)
 {
-    if (Direction == Player::forwardKey)
-    {
-        Player::hitBox = {
-            Player::position.x,
-            (Player::position.y + (Player::size.y - 2)) - 1,
-            Player::size.x,
-            2};
+    int OffsetX = 0, OffsetY = 0; // This is so the hitbox moves in a different direction based on the keypress
 
-        DrawRectangle(hitBox.x, hitBox.y, hitBox.width, hitBox.height, RED);
-    }
-    else if (Direction == Player::leftKey)
+    if (Direction == Player::ForwardKey)
     {
-        Player::hitBox = {
-            (Player::position.x) - 1,
-            Player::position.y + (Player::size.y - 2),
-            Player::size.x,
-            2};
-
-        DrawRectangle(hitBox.x, hitBox.y, hitBox.width, hitBox.height, RED);
+        OffsetY = -1;
     }
-    else if (Direction == Player::rightKey)
+    else if (Direction == Player::LeftKey)
     {
-        Player::hitBox = {
-            Player::position.x + 1,
-            Player::position.y + (Player::size.y - 2),
-            Player::size.x,
-            2};
-
-        DrawRectangle(hitBox.x, hitBox.y, hitBox.width, hitBox.height, RED);
+        OffsetX = -1;
     }
-    else if (Direction == Player::backwardKey)
+    else if (Direction == Player::RightKey)
     {
-        Player::hitBox = {
-            Player::position.x,
-            (Player::position.y + (Player::size.y - 2)) + 1,
-            Player::size.x,
-            2};
-
-        DrawRectangle(hitBox.x, hitBox.y, hitBox.width, hitBox.height, RED);
+        OffsetX = 1;
     }
+    else if (Direction == Player::BackwardKey)
+    {
+        OffsetY = 1;
+    }
+
+    Player::HitBox = {
+        Player::Position.x + OffsetX,
+        Player::Position.y + (Player::Size.y - 2) + OffsetY,
+        Player::Size.x,
+        2};
+
+    DrawRectangle(Player::HitBox.x, Player::HitBox.y, Player::HitBox.width, Player::HitBox.height, RED);
 }
 
-void Player::UnloadTexture()
+void Player::UnloadPlayerTexture()
 {
-    RAYLIB_H::UnloadTexture(PlayerTexture);
-    isTextureLoaded = false;
-    cout << "Unloaded player texture" << endl;
+    UnloadTexture(PlayerTexture);
+    IsTextureLoaded = false;
+    std::cout << "Unloaded player texture" << std::endl;
 }

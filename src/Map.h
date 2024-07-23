@@ -6,42 +6,41 @@
 #include <list>
 #include <raylib.h>
 
-using namespace std;
-
 class TileTextureInfo
 {
-    public:
-    string path = "";
-    bool canWalk = true;
-    Vector2 position = {0,0};
-    Texture2D tiletexture;
+public:
+    std::string Path = "";
+    bool CanWalk = true;
+    Vector2 Position = {0, 0};
+    Texture2D TileTexture;
 };
 
-class Map {
+class Map
+{
 public:
-    string tileSetLocation;
-    string tileMapLocation;
+    std::string TileSetLocation;
+    std::string TileMapLocation;
     void LoadTileMap();
     void UnloadTileTextures();
     bool IsTileWalkable(int x, int y);
     void Map::DrawMapToConsole();
-    int tileWidth = 0;
-    int tileHeight = 0;
+    int TileWidth = 0;
+    int TileHeight = 0;
 
 private:
-    void LoadTextures(const list<string>& paths, vector<Texture2D>& tileTextures);
-    list<TileTextureInfo> LoadTilesetXml(const string& filePath);
-    bool LoadTileMapAttributes(const string& filePath);
-    bool areTexturesLoaded = false;
+    void LoadTextures(const std::list<std::string> &paths, std::vector<Texture2D> &tileTextures);
+    std::list<TileTextureInfo> LoadTilesetXml(const std::string &filePath);
+    bool LoadTileMapAttributes(const std::string &filePath);
+    bool AreTexturesLoaded = false;
     void ParseAndRenderTiles();
-    vector<TileTextureInfo> LoadTileTextures(const list<TileTextureInfo>& paths);
-    std::vector<TileTextureInfo> tileTextures;
-    std::vector<std::vector<TileTextureInfo>> tiles;
+    std::vector<TileTextureInfo> LoadTileTextures(const std::list<TileTextureInfo> &paths);
+    std::vector<TileTextureInfo> TileTextures;
+    std::vector<std::vector<TileTextureInfo>> Tiles;
 
-    int mapWidth = 100;
-    int mapHeight = 100;
+    int MapWidth = 100;
+    int MapHeight = 100;
 
 protected:
 };
 
-#endif 
+#endif

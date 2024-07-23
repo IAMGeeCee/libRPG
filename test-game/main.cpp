@@ -8,22 +8,22 @@ int MainLoop(Game& game)
 {
 	
 	// Set up Map
-  	game.Map.tileSetLocation = "../../test-game/Assets/tiles/test-tileset.tsx";
-  	game.Map.tileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/World1.tmx";
+  	game.Map.TileSetLocation = "../../test-game/Assets/tiles/test-tileset.tsx";
+  	game.Map.TileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/World1.tmx";
   	game.Map.LoadTileMap();
 
 
 	//Set up Player
 	game.Player.SpriteSheet = "../../test-game/Assets/animations/boy-sprite-sheet.png";
-	game.Player.spriteSheetRows = 4;
-	game.Player.spriteSheetColumns = 3;
-	game.Player.size = {32,32};
-	game.Player.walkingSpeed = 80;
-	game.Player.sprintSpeed = 160;
-	game.Player.cameraZoom = 4;
-	game.Player.canSprint = true;
-	game.Player.cameraRotation = 0.0f;
-	game.Player.isAnimatedOnMove = true;
+	game.Player.SpriteSheetRows = 4;
+	game.Player.SpriteSheetColumns = 3;
+	game.Player.Size = {32,32};
+	game.Player.WalkingSpeed = 80;
+	game.Player.SprintSpeed = 160;
+	game.Player.CameraZoom = 4;
+	game.Player.CanSprint = true;
+	game.Player.CameraRotation = 0.0f;
+	game.Player.IsAnimatedOnMove = true;
 	game.Player.DrawPlayer();
 
 	return 0;

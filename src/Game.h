@@ -18,8 +18,7 @@ public:
 	Player Player;								   // All the settings for the player
 	Map Map;									   // All the settings for the map
 private:
-	float deltaTime;		  // Get the frame time
-	bool shouldClose = false; // Whether or not the game should be closing
+	float DeltaTime;		  // Get the frame time
 	void DetectKeys();		  // Function to detect key presses such as esc or f11
 };
 
