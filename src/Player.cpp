@@ -107,19 +107,19 @@ bool Player::MoveHitbox(int Direction, int CurrentSpeed)
 
     if (Direction == Player::ForwardKey)
     {
-        OffsetY = -1;
+        OffsetY = -2;
     }
     else if (Direction == Player::LeftKey)
     {
-        OffsetX = -1;
+        OffsetX = -2;
     }
     else if (Direction == Player::RightKey)
     {
-        OffsetX = 1;
+        OffsetX = 2;
     }
     else if (Direction == Player::BackwardKey)
     {
-        OffsetY = 1;
+        OffsetY = 2;
     }
 
     Player::HitBox = {
