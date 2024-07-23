@@ -3,28 +3,27 @@
 #include <thread>
 #include <Game.h>
 
-
-int MainLoop(Game& game)
+int MainLoop(Game& Game)
 {
 	
 	// Set up Map
-  	game.Map.TileSetLocation = "../../test-game/Assets/tiles/test-tileset.tsx";
-  	game.Map.TileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/World1.tmx";
-  	game.Map.LoadTileMap();
+  	Game.Map.TileSetLocation = "../../test-game/Assets/tiles/test-tileset.tsx";
+  	Game.Map.TileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/World1.tmx";
+  	Game.Map.LoadTileMap();
 
 
 	//Set up Player
-	game.Player.SpriteSheet = "../../test-game/Assets/animations/boy-sprite-sheet.png";
-	game.Player.SpriteSheetRows = 4;
-	game.Player.SpriteSheetColumns = 3;
-	game.Player.Size = {32,32};
-	game.Player.WalkingSpeed = 80;
-	game.Player.SprintSpeed = 160;
-	game.Player.CameraZoom = 4;
-	game.Player.CanSprint = true;
-	game.Player.CameraRotation = 0.0f;
-	game.Player.IsAnimatedOnMove = true;
-	game.Player.DrawPlayer();
+	Game.Player.SpriteSheet = "../../test-game/Assets/animations/boy-sprite-sheet.png";
+	Game.Player.SpriteSheetRows = 4;
+	Game.Player.SpriteSheetColumns = 3;
+	Game.Player.Size = {32,32};
+	Game.Player.WalkingSpeed = 80;
+	Game.Player.SprintSpeed = 160;
+	Game.Player.CameraZoom = 4;
+	Game.Player.CanSprint = true;
+	Game.Player.CameraRotation = 0.0f;
+	Game.Player.IsAnimatedOnMove = true;
+	Game.Player.DrawPlayer();
 
 	return 0;
 }
