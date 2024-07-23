@@ -24,43 +24,51 @@ void Player::DrawPlayer()
 
     if (IsKeyDown(ForwardKey))
     {
-        Position.y -= CurrentSpeed * GetFrameTime();
-        IsMoving = true;
-        if (IsAnimatedOnMove)
+        if (Player::MoveHitbox(ForwardKey, CurrentSpeed))
         {
-            SpriteFrameSource.y = Size.y * 3;
+            Position.y -= CurrentSpeed * GetFrameTime();
+            IsMoving = true;
+            if (IsAnimatedOnMove)
+            {
+                SpriteFrameSource.y = Size.y * 3;
+            }
         }
-        Player::MoveHitbox(ForwardKey, CurrentSpeed);
     }
     if (IsKeyDown(LeftKey))
     {
-        Position.x -= CurrentSpeed * GetFrameTime();
-        IsMoving = true;
-        if (IsAnimatedOnMove)
+        if (Player::MoveHitbox(LeftKey, CurrentSpeed))
         {
-            SpriteFrameSource.y = Size.y * 1;
+            Position.x -= CurrentSpeed * GetFrameTime();
+            IsMoving = true;
+            if (IsAnimatedOnMove)
+            {
+                SpriteFrameSource.y = Size.y * 1;
+            }
         }
-        Player::MoveHitbox(LeftKey, CurrentSpeed);
     }
     if (IsKeyDown(BackwardKey))
     {
-        Position.y += CurrentSpeed * GetFrameTime();
-        IsMoving = true;
-        if (IsAnimatedOnMove)
+        if (Player::MoveHitbox(BackwardKey, CurrentSpeed))
         {
-            SpriteFrameSource.y = 0;
+            Position.y += CurrentSpeed * GetFrameTime();
+            IsMoving = true;
+            if (IsAnimatedOnMove)
+            {
+                SpriteFrameSource.y = 0;
+            }
         }
-        Player::MoveHitbox(BackwardKey, CurrentSpeed);
     }
     if (IsKeyDown(RightKey))
     {
-        Position.x += CurrentSpeed * GetFrameTime();
-        IsMoving = true;
-        if (IsAnimatedOnMove)
+        if (Player::MoveHitbox(RightKey, CurrentSpeed))
         {
-            SpriteFrameSource.y = Size.y * 2;
+            Position.x += CurrentSpeed * GetFrameTime();
+            IsMoving = true;
+            if (IsAnimatedOnMove)
+            {
+                SpriteFrameSource.y = Size.y * 2;
+            }
         }
-        Player::MoveHitbox(RightKey, CurrentSpeed);
     }
 
     Rectangle DestRect = {Position.x, Position.y, Size.x, Size.y};
@@ -93,7 +101,7 @@ void Player::AnimatePlayerWalking()
     }
 }
 
-void Player::MoveHitbox(int Direction, int CurrentSpeed)
+bool Player::MoveHitbox(int Direction, int CurrentSpeed)
 {
     int OffsetX = 0, OffsetY = 0; // This is so the hitbox moves in a different direction based on the keypress
 
@@ -117,21 +125,25 @@ void Player::MoveHitbox(int Direction, int CurrentSpeed)
     Player::HitBox = {
         Player::Position.x + OffsetX,
         Player::Position.y + (Player::Size.y - 2) + OffsetY,
-        Player::Size.x,
+        2,
         2};
 
+    if(Direction == Player::RightKey){
+            Player::HitBox = {
+        Player::Position.x + (Player::Size.x - 2) + OffsetX,
+        Player::Position.y + (Player::Size.y - 2) + OffsetY,
+        2,
+        2};
+    }
+
     DrawRectangle(Player::HitBox.x, Player::HitBox.y, Player::HitBox.width, Player::HitBox.height, RED);
-
-
 
     if (IsKeyDown(KEY_C))
     {
         std::cout << "X: " << static_cast<int>(HitBox.x / MapPointer->TileWidth) << ",Y: " << static_cast<int>(HitBox.y / MapPointer->TileHeight) << std::endl;
     }
 
-    if (!(MapPointer->IsTileWalkable(static_cast<int>(HitBox.x / MapPointer->TileWidth), static_cast<int>(HitBox.y / MapPointer->TileHeight)))){
-        std::cout << "Not walkable tile" << std::endl;
-    }
+    return MapPointer->IsTileWalkable(static_cast<int>(HitBox.x / MapPointer->TileWidth), static_cast<int>(HitBox.y / MapPointer->TileHeight));
 }
 
 void Player::UnloadPlayerTexture()

@@ -39,7 +39,7 @@ private:
 	Rectangle HitBox;								  // The player's hitbox
 	bool IsTextureLoaded = false;					  // Whether the texture is loaded
 	Texture2D PlayerTexture;						  // Player texture
-	void MoveHitbox(int Direction, int currentSpeed); // Moves the hitbox before moving the playerprotected:
+	bool MoveHitbox(int Direction, int currentSpeed); // Moves the hitbox before moving the playerprotected:
 };
 
 #endif // PLAYER_H
