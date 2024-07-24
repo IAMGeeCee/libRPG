@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<InteractableObjects>
+    <Object X="25" Y="25" Texture="building.png" Width="32" Height="64"/>
+</InteractableObjects>
