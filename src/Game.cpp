@@ -14,7 +14,7 @@ Game::~Game() {} // Destructor
 
 void Game::StartGame(std::function<int()> MainLoop) // Main game starting point
 {
-	InitWindow(1000, 1000, "LibRPG (dev) Game"); // Set up a window
+	InitWindow(1000, 1000, "libRPG (dev) Game"); // Set up a window
 	SetTraceLogLevel(LOG_WARNING);				 // Print less to console
 
 	Camera2D Camera = {0}; // Create a Camera
