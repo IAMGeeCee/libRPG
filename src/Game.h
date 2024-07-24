@@ -4,8 +4,10 @@
 #include <raylib.h>
 #include <functional>
 #include <iostream>
+#include <list>
 #include "Player.h"
 #include "Map.h"
+#include "InteractableObject.h"
 
 class Game // Main game class
 {
@@ -17,6 +19,7 @@ public:
 	void CloseGame();							   // End the game
 	Player Player;								   // All the settings for the player
 	Map Map;									   // All the settings for the map
+	std::list<InteractableObject> InteractableObjects;
 private:
 	float DeltaTime;		  // Get the frame time
 	void DetectKeys();		  // Function to detect key presses such as esc or f11
