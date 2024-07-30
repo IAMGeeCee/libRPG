@@ -16,7 +16,7 @@ int MainLoop(Game& Game)
 	Game.Player.SpriteSheet = "../../test-game/Assets/animations/boy-sprite-sheet.png";
 	Game.Player.SpriteSheetRows = 4;
 	Game.Player.SpriteSheetColumns = 3;
-	Game.Player.Size = {32,32};
+	Game.Player.Size = {32,64};
 	Game.Player.WalkingSpeed = 80;
 	Game.Player.SprintSpeed = 160;
 	Game.Player.CameraZoom = 4;
