@@ -16,17 +16,14 @@ void Game::StartGame(std::function<int()> MainLoop) // Main game starting point
 {
 	InitWindow(1000, 1000, "libRPG (dev) Game"); // Set up a window
 	SetTraceLogLevel(LOG_WARNING);				 // Print less to console
-
-	Camera2D Camera = {0}; // Create a Camera
+	Camera2D Camera = {0};						 // Create a Camera
 
 	while (!WindowShouldClose())
 	{
-		DeltaTime = GetFrameTime(); // Get frame time
+		// Reset
 		DetectKeys();
-
 		BeginDrawing();
 		ClearBackground(RAYWHITE); // Clear the screen to stop overlap
-
 		InteractableObjects.clear();
 
 		// Camera
@@ -43,14 +40,12 @@ void Game::StartGame(std::function<int()> MainLoop) // Main game starting point
 
 		Map.LoadTileMap(); // Load the tileMap
 
-		//RENDER ANYTHING TO BE DRAWN ON TOP OF MAP HERE:
-		for (int i = 0; i < InteractableObjects.size(); i++)
+		for (int i = 0; i < InteractableObjects.size(); i++) // Load interactableObjects
 		{
 			InteractableObjects[i].DrawInteractableObject();
 		}
-		
 
-		Player.DrawPlayer(); //Draw the player
+		Player.DrawPlayer(); // Draw the player
 
 		EndMode2D();
 
@@ -77,6 +72,10 @@ void Game::DetectKeys() // Detect other key presses
 	{
 		CloseGame();
 	}
+}
+
+void Game::AddInteractableObject(InteractableObject Object){
+	InteractableObjects.push_back(Object);
 }
 
 void Game::CloseGame() // Game has ended, bye 👋
