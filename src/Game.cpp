@@ -27,23 +27,35 @@ void Game::StartGame(std::function<int()> MainLoop) // Main game starting point
 		BeginDrawing();
 		ClearBackground(RAYWHITE); // Clear the screen to stop overlap
 
+		InteractableObjects.clear();
+
 		// Camera
 		Camera.target = Player.Position;
 		Camera.offset = {static_cast<float>(GetScreenWidth()) / 2, static_cast<float>(GetScreenHeight()) / 2};
 		Camera.rotation = Game::Player.CameraRotation;
 		Camera.zoom = Game::Player.CameraZoom;
-		
+
 		Player.MapPointer = &Map; // Hand the map to the Player class so it can interact with it
 
-		BeginMode2D(Camera);		
+		BeginMode2D(Camera);
 
 		int MainLoopReturn = MainLoop(); // Do any of the user's logic and drawing
+
+		Map.LoadTileMap();
+
+		InteractableObject object;
+		object.Position = {20 * 32, 20 * 32};
+		object.Size = {64 * 2, 64 * 2};
+		object.TextureLocation = "../../test-game/Assets/objects/houseUnderground.png";
+		object.DrawInteractableObject();
+
+		Player.DrawPlayer();
 
 		EndMode2D();
 
 		// TODO: This is where GUI would be drawn
 		// Any GUI must not be drawn in a Mode2D otherwise it will move with the camera
-		
+
 		DrawFPS(50, 50);
 		DrawText((std::to_string(static_cast<int>(Player.Position.x) / Map.TileWidth) + ',' + std::to_string(static_cast<int>(Player.Position.y) / Map.TileHeight)).c_str(), 50, 100, 25, GREEN);
 
