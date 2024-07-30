@@ -15,6 +15,8 @@ void InteractableObject::DrawInteractableObject(){
     Rectangle DestRec = {Position.x,Position.y,Size.x,Size.y};
 
     DrawTexturePro(InteractableObject::Texture,SourceRec,DestRec,{0,0},0.0f,WHITE);
+
+    
 }
 
 void InteractableObject::UnloadTexture(){

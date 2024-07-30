@@ -24,9 +24,10 @@ int MainLoop(Game& Game)
 	Game.Player.IsAnimatedOnMove = true;
 
 	InteractableObject object;
-	object.Position = {20 * 32, 20 *32};
-	object.Size = {32, 32};
+	object.Position = {20 * 32, 20 * 32};
+	object.Size = {64 * 2, 64 * 2};
 	object.TextureLocation = "../../test-game/Assets/objects/houseUnderground.png";
+	Game.InteractableObjects.push_back(object);
 
 	return 0;
 }

@@ -19,7 +19,7 @@ public:
 	void CloseGame();							   // End the game
 	Player Player;								   // All the settings for the player
 	Map Map;									   // All the settings for the map
-	std::list<InteractableObject> InteractableObjects;
+	std::vector<InteractableObject> InteractableObjects;
 private:
 	float DeltaTime;		  // Get the frame time
 	void DetectKeys();		  // Function to detect key presses such as esc or f11

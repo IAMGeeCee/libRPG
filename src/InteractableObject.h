@@ -15,8 +15,8 @@ public:
     Vector2 Size;                // Size of fInteractableObject
     std::string TextureLocation; // Location of texture
 private:
-    void LoadTexture();   // Loads the texture
-    
+    void LoadTexture(); // Loads the texture
+
     bool IsTextureLoaded = false;
     Texture2D Texture;
 };

@@ -41,15 +41,16 @@ void Game::StartGame(std::function<int()> MainLoop) // Main game starting point
 
 		int MainLoopReturn = MainLoop(); // Do any of the user's logic and drawing
 
-		Map.LoadTileMap();
+		Map.LoadTileMap(); // Load the tileMap
 
-		InteractableObject object;
-		object.Position = {20 * 32, 20 * 32};
-		object.Size = {64 * 2, 64 * 2};
-		object.TextureLocation = "../../test-game/Assets/objects/houseUnderground.png";
-		object.DrawInteractableObject();
+		//RENDER ANYTHING TO BE DRAWN ON TOP OF MAP HERE:
+		for (int i = 0; i < InteractableObjects.size(); i++)
+		{
+			InteractableObjects[i].DrawInteractableObject();
+		}
+		
 
-		Player.DrawPlayer();
+		Player.DrawPlayer(); //Draw the player
 
 		EndMode2D();
 
