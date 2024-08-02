@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<InteractableObjects>
+    <Object>
+        <X>25</X>
+        <Y>25</Y>
+        <Width>128</Width>
+        <Height>128</Height>
+        <Path>../../test-game/Assets/houseUnderground.png</Path>
+    </Object>
+    <Object>
+        <X>15</X>
+        <Y>18</Y>
+        <Width>128</Width>
+        <Height>128</Height>
+        <Path>../../test-game/Assets/houseUnderground.png</Path>
+    </Object>
+</InteractableObjects>

@@ -5,6 +5,7 @@
 #include <functional>
 #include <iostream>
 #include <list>
+#include <string>
 #include "Player.h"
 #include "Map.h"
 #include "InteractableObject.h"
@@ -21,7 +22,7 @@ public:
 	void StartGame(std::function<int()> mainLoop);		   // Main function that will start the game and open a window
 	void CloseGame();									   // End the game
 	void AddInteractableObject(InteractableObject Object); // Adds an InteractableObject to the list
-	void LoadInteractableObjecsFromXML();
+	void LoadInteractableObjecsFromXML(std::string Path);
 private:
 	void DetectKeys();									 // Function to detect key presses such as esc or f11
 	std::vector<InteractableObject> InteractableObjects; // List of interactableObject

@@ -1,7 +1,15 @@
 #include "Game.h"
+#include "../external/rapidxml-1.13/rapidxml.hpp"
 #include <raylib.h>
 #include <raymath.h>
 #include <functional>
+#include <string>
+#include <list>
+#include <ostream>
+#include <sstream>
+#include <iostream>
+#include <fstream>
+#include <vector>
 
 Game::Game() // Constructor
 {
@@ -15,10 +23,10 @@ Game::~Game() {} // Destructor
 void Game::StartGame(std::function<int()> MainLoop) // Main game starting point
 {
 	InitWindow(GetScreenWidth(), GetScreenHeight(), "libRPG (dev) Game"); // Set up a window
-	SetTraceLogLevel(LOG_WARNING);				 // Print less to console
+	SetTraceLogLevel(LOG_WARNING);										  // Print less to console
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	ToggleFullscreen();
-	Camera2D Camera = {0};						 // Create a Camera
+	Camera2D Camera = {0}; // Create a Camera
 
 	while (!WindowShouldClose())
 	{
@@ -77,12 +85,46 @@ void Game::DetectKeys() // Detect other key presses
 	}
 }
 
-void Game::AddInteractableObject(InteractableObject Object){
+void Game::AddInteractableObject(InteractableObject Object)
+{
 	InteractableObjects.push_back(Object);
 }
 
-void Game::LoadInteractableObjecsFromXML(){
-	
+void Game::LoadInteractableObjecsFromXML(std::string Path)
+{
+	rapidxml::xml_document<> ObjectsXML;
+	std::ifstream File(Path);
+	if (!File.is_open())
+	{
+		std::cerr << "Can't read XML file: " << Path << std::endl;
+		return;
+	}
+
+	std::stringstream Buffer;
+	Buffer << File.rdbuf();
+	std::string FileContents = Buffer.str();
+	File.close();
+	ObjectsXML.parse<0>(&FileContents[0]);
+
+	rapidxml::xml_node<> *ObjectsNode = ObjectsXML.first_node();
+	if (!ObjectsNode)
+	{
+		std::cerr << "Invalid Tileset XML format" << std::endl;
+		return;
+	}
+
+	for (rapidxml::xml_node<> *Child = ObjectsNode->first_node("Object"); Child != nullptr; Child = Child->next_sibling("Object"))
+	{
+		InteractableObject Object;
+
+		Object.Position.x = std::stoi(Child->first_node("X")->value()) * Map.TileWidth;
+		Object.Position.y = std::stoi(Child->first_node("Y")->value()) * Map.TileHeight;
+		Object.Size.x = std::stoi(Child->first_node("Width")->value());
+		Object.Size.y = std::stoi(Child->first_node("Height")->value());
+		Object.TextureLocation = Child->first_node("Path")->value();
+
+		AddInteractableObject(Object);
+	}
 }
 
 void Game::CloseGame() // Game has ended, bye 👋
