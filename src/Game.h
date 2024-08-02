@@ -21,6 +21,7 @@ public:
 	void StartGame(std::function<int()> mainLoop);		   // Main function that will start the game and open a window
 	void CloseGame();									   // End the game
 	void AddInteractableObject(InteractableObject Object); // Adds an InteractableObject to the list
+	void LoadInteractableObjecsFromXML();
 private:
 	void DetectKeys();									 // Function to detect key presses such as esc or f11
 	std::vector<InteractableObject> InteractableObjects; // List of interactableObject

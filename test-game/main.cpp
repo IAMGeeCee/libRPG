@@ -7,12 +7,12 @@ int MainLoop(Game& Game)
 {
 	
 	// Set up Map
-  	Game.Map.TileSetLocation = "../../test-game/Assets/tiles/test-tileset.tsx";
-  	Game.Map.TileMapLocation = "../../test-game/Assets/tiles/World Tilemaps/World1.tmx";
+  	Game.Map.TileSetLocation = "../../test-game/Assets/tileset/test-tileset.tsx";
+  	Game.Map.TileMapLocation = "../../test-game/Assets/World1.tmx";
 
 
 	//Set up Player
-	Game.Player.SpriteSheet = "../../test-game/Assets/animations/boy-sprite-sheet.png";
+	Game.Player.SpriteSheet = "../../test-game/Assets/boy-sprite-sheet.png";
 	Game.Player.SpriteSheetRows = 4;
 	Game.Player.SpriteSheetColumns = 3;
 	Game.Player.Size = {32,32};
@@ -26,7 +26,7 @@ int MainLoop(Game& Game)
 	InteractableObject object;
 	object.Position = {20 * 32, 20 * 32};
 	object.Size = {64 * 2, 64 * 2};
-	object.TextureLocation = "../../test-game/Assets/objects/houseUnderground.png";
+	object.TextureLocation = "../../test-game/Assets/houseUnderground.png";
 	Game.AddInteractableObject(object);
 
 

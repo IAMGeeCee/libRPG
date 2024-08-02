@@ -81,6 +81,10 @@ void Game::AddInteractableObject(InteractableObject Object){
 	InteractableObjects.push_back(Object);
 }
 
+void Game::LoadInteractableObjecsFromXML(){
+	
+}
+
 void Game::CloseGame() // Game has ended, bye 👋
 {
 	Map.UnloadTileTextures();
