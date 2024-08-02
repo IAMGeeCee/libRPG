@@ -128,12 +128,13 @@ bool Player::MoveHitbox(int Direction, int CurrentSpeed)
         2,
         2};
 
-    if(Direction == Player::RightKey){
-            Player::HitBox = {
-        Player::Position.x + (Player::Size.x - 2) + OffsetX,
-        Player::Position.y + (Player::Size.y - 2) + OffsetY,
-        2,
-        2};
+    if (Direction == Player::RightKey)
+    {
+        Player::HitBox = {
+            Player::Position.x + (Player::Size.x - 2) + OffsetX,
+            Player::Position.y + (Player::Size.y - 2) + OffsetY,
+            2,
+            2};
     }
 
     DrawRectangle(Player::HitBox.x, Player::HitBox.y, Player::HitBox.width, Player::HitBox.height, RED);
@@ -141,6 +142,17 @@ bool Player::MoveHitbox(int Direction, int CurrentSpeed)
     if (IsKeyDown(KEY_C))
     {
         std::cout << "X: " << static_cast<int>(HitBox.x / MapPointer->TileWidth) << ",Y: " << static_cast<int>(HitBox.y / MapPointer->TileHeight) << std::endl;
+    }
+
+    for (int i = 0; i < InteractableObjectListPointer->size(); i++)
+    {
+        if (HitBox.x >= (*InteractableObjectListPointer)[i].Position.x &&
+            HitBox.x <= (*InteractableObjectListPointer)[i].Position.x + (*InteractableObjectListPointer)[i].Size.x &&
+            HitBox.y >= (*InteractableObjectListPointer)[i].Position.y &&
+            HitBox.y <= (*InteractableObjectListPointer)[i].Position.y + (*InteractableObjectListPointer)[i].Size.y)
+        {
+            return false;
+        }
     }
 
     return MapPointer->IsTileWalkable(static_cast<int>(HitBox.x / MapPointer->TileWidth), static_cast<int>(HitBox.y / MapPointer->TileHeight));

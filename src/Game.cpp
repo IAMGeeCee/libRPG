@@ -35,6 +35,7 @@ void Game::StartGame(std::function<int()> MainLoop) // Main game starting point
 		Camera.zoom = Game::Player.CameraZoom;
 
 		Player.MapPointer = &Map; // Hand the map to the Player class so it can interact with it
+		Player.InteractableObjectListPointer = &InteractableObjects;
 
 		BeginMode2D(Camera);
 

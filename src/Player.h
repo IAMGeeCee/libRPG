@@ -3,6 +3,8 @@
 
 #include <raylib.h>
 #include <Map.h>
+#include <vector>
+#include <InteractableObject.h>
 
 class Player
 {
@@ -30,6 +32,7 @@ public:
 	void UnloadPlayerTexture();		 // Unloads the player's texture at the end of the game
 
 	Map *MapPointer; // Pointer to the gamees map so that we can do IsTileWalkable()
+	std::vector<InteractableObject> *InteractableObjectListPointer;
 
 private:
 	Color PlayerColour = WHITE;						  // Player colour
