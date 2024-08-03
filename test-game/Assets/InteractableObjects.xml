@@ -7,11 +7,4 @@
         <Height>128</Height>
         <Path>../../test-game/Assets/houseUnderground.png</Path>
     </Object>
-    <Object>
-        <X>15</X>
-        <Y>18</Y>
-        <Width>128</Width>
-        <Height>128</Height>
-        <Path>../../test-game/Assets/houseUnderground.png</Path>
-    </Object>
 </InteractableObjects>

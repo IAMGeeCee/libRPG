@@ -76,7 +76,7 @@ void Game::DetectKeys() // Detect other key presses
 {
 	if (IsKeyPressed(KEY_F11))
 	{
-		ToggleBorderlessWindowed();
+		ToggleFullscreen();
 	}
 
 	if (IsKeyPressed(KEY_ESCAPE))
@@ -87,6 +87,8 @@ void Game::DetectKeys() // Detect other key presses
 
 void Game::AddInteractableObject(InteractableObject Object)
 {
+	Object.Position.x = Object.Position.x * Map.TileWidth;
+	Object.Position.y = Object.Position.y * Map.TileHeight;
 	InteractableObjects.push_back(Object);
 }
 

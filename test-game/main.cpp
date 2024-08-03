@@ -23,7 +23,12 @@ int MainLoop(Game& Game)
 	Game.Player.CameraRotation = 0.0f;
 	Game.Player.IsAnimatedOnMove = true;
 
-	Game.LoadInteractableObjecsFromXML("../../test-game/Assets/InteractableObjects.xml");
+	InteractableObject Object;
+	Object.Position = {25,25};
+	Object.Size = {128,128};
+	Object.TextureLocation = "../../test-game/Assets/houseUnderground.png";
+
+	Game.AddInteractableObject(Object);
 
 	return 0;
 }

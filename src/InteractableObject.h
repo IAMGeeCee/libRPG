@@ -16,7 +16,6 @@ public:
     std::string TextureLocation; // Location of texture
 private:
     void LoadTexture(); // Loads the texture
-
     bool IsTextureLoaded = false;
     Texture2D Texture;
 };
