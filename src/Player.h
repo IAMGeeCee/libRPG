@@ -29,10 +29,13 @@ public:
 
 	void DrawPlayer();			 // Draws player to the screen
 	void AnimatePlayerWalking(); // Animates the player as it walks
-	void UnloadPlayerTexture();		 // Unloads the player's texture at the end of the game
+	void UnloadPlayerTexture();	 // Unloads the player's texture at the end of the game
 
-	Map *MapPointer; // Pointer to the gamees map so that we can do IsTileWalkable()
+	Map *MapPointer; // Pointer to the games map so that we can do IsTileWalkable()
+
 	std::vector<InteractableObject> *InteractableObjectListPointer;
+	InteractableObject *ClosestInteractableObject;	  // The last interactableObject that the player got near
+	bool GetCanInteract();
 
 private:
 	Color PlayerColour = WHITE;						  // Player colour
@@ -43,6 +46,7 @@ private:
 	bool IsTextureLoaded = false;					  // Whether the texture is loaded
 	Texture2D PlayerTexture;						  // Player texture
 	bool MoveHitbox(int Direction, int currentSpeed); // Moves the hitbox before moving the playerprotected:
+	bool CanInteractWithInteractable = false;		  // Wether or not the player can interact with an interactableobject
 };
 
 #endif // PLAYER_H

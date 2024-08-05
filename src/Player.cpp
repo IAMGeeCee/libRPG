@@ -4,6 +4,7 @@
 #include <chrono>
 #include <thread>
 
+
 void Player::DrawPlayer()
 {
     if (!IsTextureLoaded) // Load the texture if it isn't already loaded
@@ -103,6 +104,8 @@ void Player::AnimatePlayerWalking()
 
 bool Player::MoveHitbox(int Direction, int CurrentSpeed)
 {
+    CanInteractWithInteractable = false;
+
     int OffsetX = 0, OffsetY = 0; // This is so the hitbox moves in a different direction based on the keypress
 
     if (Direction == Player::ForwardKey)
@@ -151,11 +154,17 @@ bool Player::MoveHitbox(int Direction, int CurrentSpeed)
             HitBox.y >= (*InteractableObjectListPointer)[i].Position.y &&
             HitBox.y <= (*InteractableObjectListPointer)[i].Position.y + (*InteractableObjectListPointer)[i].Size.y)
         {
+            CanInteractWithInteractable = true;
+            ClosestInteractableObject = &(*InteractableObjectListPointer)[i];
             return false;
         }
     }
 
     return MapPointer->IsTileWalkable(static_cast<int>(HitBox.x / MapPointer->TileWidth), static_cast<int>(HitBox.y / MapPointer->TileHeight));
+}
+
+bool Player::GetCanInteract(){
+    return CanInteractWithInteractable;
 }
 
 void Player::UnloadPlayerTexture()

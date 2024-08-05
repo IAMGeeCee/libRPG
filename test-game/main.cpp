@@ -3,6 +3,10 @@
 #include <thread>
 #include <Game.h>
 
+void ObjectInteract(){
+	std::cout << "Object interacted with" << std::endl;
+}
+
 int MainLoop(Game& Game)
 {
 	
@@ -27,6 +31,7 @@ int MainLoop(Game& Game)
 	Object.Position = {25,25};
 	Object.Size = {128,128};
 	Object.TextureLocation = "../../test-game/Assets/houseUnderground.png";
+	Object.InteractAction = ObjectInteract;
 
 	Game.AddInteractableObject(Object);
 

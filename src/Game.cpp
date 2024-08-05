@@ -31,7 +31,7 @@ void Game::StartGame(std::function<int()> MainLoop) // Main game starting point
 	while (!WindowShouldClose())
 	{
 		// Reset
-		DetectKeys();
+		DetectInput();
 		BeginDrawing();
 		ClearBackground(RAYWHITE); // Clear the screen to stop overlap
 		InteractableObjects.clear();
@@ -72,7 +72,7 @@ void Game::StartGame(std::function<int()> MainLoop) // Main game starting point
 	CloseGame(); // Game has ended
 }
 
-void Game::DetectKeys() // Detect other key presses
+void Game::DetectInput() // Detect other key presses
 {
 	if (IsKeyPressed(KEY_F11))
 	{
@@ -82,6 +82,17 @@ void Game::DetectKeys() // Detect other key presses
 	if (IsKeyPressed(KEY_ESCAPE))
 	{
 		CloseGame();
+	}
+
+	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+	{
+		if (Player.GetCanInteract())
+		{
+			if (Player.ClosestInteractableObject->InteractAction)
+			{
+				Player.ClosestInteractableObject->InteractAction();
+			}
+		}
 	}
 }
 

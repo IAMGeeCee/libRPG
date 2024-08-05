@@ -24,7 +24,7 @@ public:
 	void AddInteractableObject(InteractableObject Object); // Adds an InteractableObject to the list
 	void LoadInteractableObjecsFromXML(std::string Path);
 private:
-	void DetectKeys();									 // Function to detect key presses such as esc or f11
+	void DetectInput();									 // Function to detect key presses such as esc or f11
 	std::vector<InteractableObject> InteractableObjects; // List of interactableObject
 };
 

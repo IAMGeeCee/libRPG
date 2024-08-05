@@ -3,6 +3,7 @@
 
 #include <raylib.h>
 #include <string>
+#include <functional>
 
 class InteractableObject
 {
@@ -11,9 +12,10 @@ public:
     void UnloadTexture(); // Unloads the texture
     void DrawInteractableObject();
 
-    Vector2 Position;            // Position of InteractableObject
-    Vector2 Size;                // Size of fInteractableObject
-    std::string TextureLocation; // Location of texture
+    Vector2 Position;                     // Position of InteractableObject
+    Vector2 Size;                         // Size of fInteractableObject
+    std::string TextureLocation;          // Location of texture
+    std::function<void()> InteractAction; // Function to run when interacted with
 private:
     void LoadTexture(); // Loads the texture
     bool IsTextureLoaded = false;
