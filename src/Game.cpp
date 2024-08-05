@@ -84,7 +84,7 @@ void Game::DetectInput() // Detect other key presses
 		CloseGame();
 	}
 
-	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+	if ((InteractInputType == MOUSE_BUTTON && IsMouseButtonPressed(InteractMouseButton)) || (InteractInputType == KEYBOARD_KEY && IsKeyPressed(InteractKey)))
 	{
 		if (Player.GetCanInteract())
 		{

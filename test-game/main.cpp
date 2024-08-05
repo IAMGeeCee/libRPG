@@ -27,6 +27,8 @@ int MainLoop(Game& Game)
 	Game.Player.CameraRotation = 0.0f;
 	Game.Player.IsAnimatedOnMove = true;
 
+	Game.InteractInputType = KEYBOARD_KEY;
+
 	InteractableObject Object;
 	Object.Position = {25,25};
 	Object.Size = {128,128};
