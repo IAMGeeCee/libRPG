@@ -3,31 +3,32 @@
 #include <thread>
 #include <Game.h>
 
+Game testgame = Game(); 
+
 void ObjectInteract(){
-	std::cout << "Object interacted with" << std::endl;
+	testgame.Map.TileMapLocation = "../../test-game/Assets/test-tilemap.tmx";
 }
 
-int MainLoop(Game& Game)
+int MainLoop()
 {
 	
 	// Set up Map
-  	Game.Map.TileSetLocation = "../../test-game/Assets/tileset/test-tileset.tsx";
-  	Game.Map.TileMapLocation = "../../test-game/Assets/World1.tmx";
+  	testgame.Map.TileSetLocation = "../../test-game/Assets/tileset/test-tileset.tsx";
 
 
 	//Set up Player
-	Game.Player.SpriteSheet = "../../test-game/Assets/boy-sprite-sheet.png";
-	Game.Player.SpriteSheetRows = 4;
-	Game.Player.SpriteSheetColumns = 3;
-	Game.Player.Size = {32,32};
-	Game.Player.WalkingSpeed = 80;
-	Game.Player.SprintSpeed = 160;
-	Game.Player.CameraZoom = 4;
-	Game.Player.CanSprint = true;
-	Game.Player.CameraRotation = 0.0f;
-	Game.Player.IsAnimatedOnMove = true;
+	testgame.Player.SpriteSheet = "../../test-game/Assets/boy-sprite-sheet.png";
+	testgame.Player.SpriteSheetRows = 4;
+	testgame.Player.SpriteSheetColumns = 3;
+	testgame.Player.Size = {32,32};
+	testgame.Player.WalkingSpeed = 80;
+	testgame.Player.SprintSpeed = 160;
+	testgame.Player.CameraZoom = 4;
+	testgame.Player.CanSprint = true;
+	testgame.Player.CameraRotation = 0.0f;
+	testgame.Player.IsAnimatedOnMove = true;
 
-	Game.InteractInputType = KEYBOARD_KEY;
+	testgame.InteractInputType = KEYBOARD_KEY;
 
 	InteractableObject Object;
 	Object.Position = {25,25};
@@ -35,7 +36,7 @@ int MainLoop(Game& Game)
 	Object.TextureLocation = "../../test-game/Assets/houseUnderground.png";
 	Object.InteractAction = ObjectInteract;
 
-	Game.AddInteractableObject(Object);
+	testgame.AddInteractableObject(Object);
 
 	return 0;
 }
@@ -44,8 +45,9 @@ int main()
 {
 	// Create an instance of the Game class
 	// and then start the game with the user defined game logic function (line 6)
-	Game testgame = Game(); 
-	testgame.StartGame([&]() { return MainLoop(testgame); });
+		
+  	testgame.Map.TileMapLocation = "../../test-game/Assets/World1.tmx";
+	testgame.StartGame(MainLoop);
 	
 	return 0;
 }
