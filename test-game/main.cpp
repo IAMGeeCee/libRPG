@@ -28,7 +28,7 @@ int MainLoop()
 	testgame.Player.CameraRotation = 0.0f;
 	testgame.Player.IsAnimatedOnMove = true;
 
-	testgame.InteractInputType = KEYBOARD_KEY;
+	testgame.InteractInputType = MOUSE_BUTTON;
 
 	InteractableObject Object;
 	Object.Position = {25,25};

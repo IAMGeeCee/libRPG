@@ -56,6 +56,11 @@ void Game::StartGame(std::function<int()> MainLoop) // Main game starting point
 			InteractableObjects[i].DrawInteractableObject();
 		}
 
+		for (int i = 0; i < Entities.size(); i++) // Load interactableObjects
+		{
+			Entities[i].DrawEntity();
+		}
+
 		Player.DrawPlayer(); // Draw the player
 
 		EndMode2D();
@@ -101,6 +106,13 @@ void Game::AddInteractableObject(InteractableObject Object)
 	Object.Position.x = Object.Position.x * Map.TileWidth;
 	Object.Position.y = Object.Position.y * Map.TileHeight;
 	InteractableObjects.push_back(Object);
+}
+
+void Game::AddEntity(Entity Entity)
+{
+	Entity.Position.x = Entity.Position.x * Map.TileWidth;
+	Entity.Position.y = Entity.Position.y * Map.TileHeight;
+	Entities.push_back(Entity);
 }
 
 void Game::LoadInteractableObjecsFromXML(std::string Path)
